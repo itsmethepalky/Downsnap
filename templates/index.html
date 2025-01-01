@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Download Instagram media including photos, videos, and Reels.">
+    <title>{{ title }}</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <div class="container">
+        <h1>Instagram Downloader</h1>
+        
+        <!-- Input Section -->
+        <div id="input-section">
+            <form id="url-form">
+                <div class="input-group">
+                    <input type="text" id="instagram-url" placeholder="Enter Instagram URL" required>
+                    <button type="button" id="paste-btn">Paste</button>
+                </div>
+                <button type="submit">Fetch Media</button>
+            </form>
+        </div>
+
+        <!-- Preview Section -->
+        <div id="preview-container" style="display:none;">
+            <h2>Preview</h2>
+            <div id="media-container"></div>
+            <button id="back-btn">Back</button>
+        </div>
+    </div>
+
+    <script>
+        // Paste button functionality
+        document.getElementById('paste-btn').addEventListener('click', function() {
+            navigator.clipboard.readText().then(function(text) {
+                document.getElementById('instagram-url').value = text;
+            }).catch(function(err) {
+                console.error('Error pasting from clipboard: ', err);
+            });
+        });
+
+        document.getElementById('url-form').addEventListener('submit', function(event) {
+            event.preventDefault();
+            let url = document.getElementById('instagram-url').value;
+            fetch('/download', {
+                method: 'POST',
+                headers: {'Content-Type': 'application/json'},
+                body: JSON.stringify({url: url})
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.error) {
+                    alert(data.error);
+                } else {
+                    // Hide input section and show preview
+                    document.getElementById('input-section').style.display = 'none';
+                    document.getElementById('preview-container').style.display = 'block';
+                    let mediaContainer = document.getElementById('media-container');
+                    mediaContainer.innerHTML = '';  // Clear previous content
+                    
+                    // Loop through all media items (images and videos)
+                    data.media.forEach(item => {
+                        let mediaElement;
+                        let downloadButton = document.createElement('button');
+                        downloadButton.innerText = 'Download';
+                        downloadButton.onclick = function() {
+                            window.location.href = '/download-file?url=' + encodeURIComponent(item.url);
+                        };
+
+                        if (item.type === 'video') {
+                            mediaElement = document.createElement('video');
+                            mediaElement.src = item.url;
+                            mediaElement.controls = true;
+                        } else {
+                            mediaElement = document.createElement('img');
+                            mediaElement.src = item.url;
+                            mediaElement.alt = "Instagram Image";
+                        }
+
+                        // Wrap media element and button
+                        let mediaWrapper = document.createElement('div');
+                        mediaWrapper.classList.add('media-wrapper');
+                        mediaWrapper.appendChild(mediaElement);
+                        mediaWrapper.appendChild(downloadButton);
+
+                        mediaContainer.appendChild(mediaWrapper);
+                    });
+                }
+            })
+            .catch(error => console.error('Error fetching media:', error));
+        });
+
+        document.getElementById('back-btn').addEventListener('click', function() {
+            document.getElementById('input-section').style.display = 'block';
+            document.getElementById('preview-container').style.display = 'none';
+        });
+    </script>
+</body>
+</html>
