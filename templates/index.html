@@ -91,11 +91,11 @@
 
                         if (item.type === 'video') {
                             mediaElement = document.createElement('video');
-                            mediaElement.src = item.url;
+                            mediaElement.src = '/download-file?url=' + encodeURIComponent(item.url);
                             mediaElement.controls = true;
                         } else {
                             mediaElement = document.createElement('img');
-                            mediaElement.src = item.url;
+                            mediaElement.src = '/download-file?url=' + encodeURIComponent(item.url);
                             mediaElement.alt = "Instagram Image";
                         }
 
