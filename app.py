@@ -1,6 +1,6 @@
 import instaloader
 import requests
-from flask import Flask, request, jsonify, render_template, send_file
+from flask import Flask, request, jsonify, render_template, send_file, send_from_directory
 from io import BytesIO
 from datetime import datetime
 
@@ -117,6 +117,12 @@ def download_file():
     except Exception as e:
         print(f"Error: {e}")
         return jsonify({"error": "Failed to download the file"}), 500
+
+# Route to serve the sw.js file for service worker verification
+@app.route('/sw.js')
+def serve_sw():
+    """Serve the service worker file."""
+    return send_from_directory('', 'sw.js', mimetype='application/javascript')
 
 if __name__ == "__main__":
     app.run(debug=True)
