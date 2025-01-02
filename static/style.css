@@ -93,6 +93,51 @@ button:hover {
     margin-bottom: 10px;
 }
 
+/* Blog Section */
+#blog-section {
+    margin-top: 40px;
+    background-color: #f9f9f9;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.05);
+}
+
+#blog-section h2 {
+    font-size: 24px;
+    margin-bottom: 15px;
+}
+
+#blog-section p {
+    font-size: 16px;
+    line-height: 1.6;
+}
+
+#blog-section ol {
+    font-size: 16px;
+    line-height: 1.6;
+    margin-left: 20px;
+}
+
+#blog-section ol li {
+    margin-bottom: 10px;
+}
+
+/* Footer */
+footer {
+    text-align: center;
+    margin-top: 40px;
+    font-size: 14px;
+    color: #555;
+}
+
+footer p {
+    margin: 0;
+    padding: 10px 0;
+    background-color: #f1f1f1;
+    border-top: 1px solid #ddd;
+}
+
+/* Media query for responsive design */
 @media (max-width: 768px) {
     .container {
         width: 90%;
@@ -109,5 +154,10 @@ button:hover {
 
     button {
         margin-top: 10px;
+    }
+
+    /* Blog Section */
+    #blog-section {
+        padding: 15px;
     }
 }
