@@ -2,29 +2,20 @@
 <html amp lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <meta name="viewport" content="width=device-width,minimum-scale=1,initial-scale=1">
     <meta name="robots" content="index, follow">
-    <meta name="googlebot" content="index, follow">
-    <meta name="bingbot" content="index, follow">
-    <meta name="description" content="Download Instagram media including photos, videos, and Reels easily with our Instagram downloader tool. It is completely free and easy to use with friendly UI for all devices. It is similar to Snapinsta, Snaptik, and Snapsave.">
-    <meta name="title" content="Downsnap - Instagram videos, media, Reels, story, photos, Download, snapsave, snapinsta">
-    <meta name="keywords" content="Instagram downloader, download Instagram videos, Instagram photos, Instagram Reels, Instagram media, free Instagram downloader, download Instagram content, snapsave, snapinsta">
+    <meta name="description" content="Download Instagram media including photos, videos, and Reels easily with our Instagram downloader tool.">
+    <meta name="keywords" content="Instagram downloader, download Instagram videos, Instagram photos, Instagram Reels, Instagram media, free Instagram downloader">
     <meta name="author" content="thepalky">
     <meta property="og:title" content="Downsnap" />
-    <meta property="og:description" content="Join Downsnap on social media for updates and more." />
+    <meta property="og:description" content="Download Instagram media easily with Downsnap." />
     <meta property="og:image" content="https://lh3.googleusercontent.com/d/1Jq3-LRieYYUveYpYVTmFhuWTMaCgCO4t" />
     <meta property="og:url" content="https://downsnap.onrender.com/" />
     <meta property="og:type" content="website" />
-    <meta property="og:site_name" content="Downsnap" />
-    <meta property="og:locale" content="en_US" />
     <meta name="twitter:card" content="summary_large_image" />
-    <meta name="twitter:title" content="Downsnap" />
-    <meta name="twitter:description" content="Join Downsnap on social media for updates and more." />
-    <meta name="twitter:image" content="https://lh3.googleusercontent.com/d/1Jq3-LRieYYUveYpYVTmFhuWTMaCgCO4t" />
-    <meta name="twitter:url" content="https://downsnap.onrender.com/" />
-    <title>Downsnap - Instagram videos, media, Reels, story, photos, Download, snapsave, snapinsta</title>
-    <link rel="icon" type="image/png" href="{{ url_for('static', filename='favicon.png') }}">
-    
+    <title>Downsnap - Instagram Downloader</title>
+    <link rel="icon" type="image/png" href="/static/favicon.png">
+
     <!-- AMP Boilerplate -->
     <script async src="https://cdn.ampproject.org/v0.js"></script>
     <style amp-boilerplate>
@@ -42,146 +33,104 @@
         </style>
     </noscript>
 
-    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
-
-    <!-- No external JS, AMP only allows specific tags -->
-    
-    <!-- AMP Image support -->
+    <!-- AMP Components -->
+    <script async custom-element="amp-form" src="https://cdn.ampproject.org/v0/amp-form-0.1.js"></script>
     <script async custom-element="amp-img" src="https://cdn.ampproject.org/v0/amp-img-0.1.js"></script>
-    <!-- AMP Video support -->
-    <script async custom-element="amp-video" src="https://cdn.ampproject.org/v0/amp-video-0.1.js"></script>
 
+    <style amp-custom>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 0;
+        }
+        header {
+            text-align: center;
+            padding: 10px;
+            background: linear-gradient(90deg, yellow, pink);
+        }
+        header h1 {
+            font-size: 24px;
+            margin: 0;
+            color: #333;
+        }
+        .container {
+            width: 90%;
+            max-width: 600px;
+            margin: 20px auto;
+            padding: 20px;
+            background: #fff;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
+        }
+        input {
+            width: 100%;
+            padding: 10px;
+            margin: 10px 0;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            font-size: 16px;
+        }
+        button {
+            width: 100%;
+            padding: 10px;
+            background: #28a745;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            font-size: 16px;
+            cursor: pointer;
+        }
+        button:hover {
+            background: #218838;
+        }
+        #blog-section {
+            margin: 20px 0;
+            padding: 15px;
+            background: #f9f9f9;
+            border-radius: 8px;
+        }
+        footer {
+            text-align: center;
+            padding: 20px;
+            background: #fff;
+            border-top: 1px solid #ccc;
+        }
+        footer p {
+            margin: 0;
+            font-size: 14px;
+        }
+    </style>
 </head>
-  
 <body>
-  <h2>The ultimate platform for downloading videos, reels, posts, pictures, stories, IGTV videos, or profile pictures from Instagram</h2>
-  
-  <div class="container">
-    
-        <!-- Input Section -->
-        <div id="input-section">
-            <form id="url-form" method="post">
-                <div class="input-group">
-                    <input type="text" id="instagram-url" placeholder="Enter Instagram URL" required>
-                    <button type="button" id="paste-btn">Paste</button>
-                </div>
-                <button type="submit">Fetch Media</button>
-            </form>
-        </div>
 
-        <!-- Preview Section -->
-        <div id="preview-container" style="display:none;">
-            <h2>Preview</h2>
-            <div id="media-container"></div>
-            <button id="back-btn">Back</button>
-        </div>
+<header>
+    <h1>Downsnap</h1>
+</header>
 
-        <!-- Blog Section -->
-        <div id="blog-section">
-            <h2>How to Use Our Instagram Downloader</h2>
-            <p>Our Instagram Downloader is a simple tool that allows you to easily download media from Instagram, such as photos, videos, and Reels. To use it, follow these steps:</p>
-            <ol>
-                <li>Open the Instagram post containing the media you want to download.</li>
-                <li>Copy the URL of the post from the address bar or use the "Copy Link" feature on Instagram.</li>
-                <li>Paste the copied URL in the input field above and click "Fetch Media".</li>
-                <li>Preview the media (photos and videos) and click the "Download" button next to each item to save it to your device.</li>
-                <li>If you want to download more media, just go back and paste another URL!</li>
-            </ol>
-            <p>Enjoy downloading your favorite Instagram content with ease!</p>
-        </div>
+<main>
+    <div class="container">
+        <h2>Download Instagram Media Easily</h2>
+        <form method="post" action-xhr="/download">
+            <input type="url" name="url" placeholder="Enter Instagram URL" required>
+            <button type="submit">Fetch Media</button>
+        </form>
+    </div>
 
-        <!-- Footer -->
-        <footer>
-            <div class="footer-container">
-                <div class="footer-section">
-                    <h4>Support</h4>
-                    <ul>
-                        <li><a href="{{ url_for('about') }}">About Us</a></li>
-                        <li><a href="{{ url_for('contact') }}">Contact</a></li>
-                        <li><a href="{{ url_for('blog') }}">Blog</a></li>
-                    </ul>
-                </div>
-                <div class="footer-section">
-                    <h4>Legal</h4>
-                    <ul>
-                        <li><a href="{{ url_for('terms') }}">Terms of Service</a></li>
-                        <li><a href="{{ url_for('privacy') }}">Privacy Policy</a></li>
-                         <li><a href="{{ url_for('sitemap') }}">Sitemap</a></li>
-                    </ul>
-               </div>
-               <div class="footer-bottom">
-                    <p>__________________________________________</p>
-                    <p>We are not affiliated with Instagram or Meta.</p>
-                    <p>© 2025 <a href="#">Downsnap</a> All rights reserved.</p>
-                </div>
-            </div>
-        </footer>
+    <div id="blog-section">
+        <h3>How to Use Our Downloader</h3>
+        <p>Follow these simple steps:</p>
+        <ol>
+            <li>Copy the Instagram URL of the media.</li>
+            <li>Paste it in the input box above.</li>
+            <li>Click "Fetch Media" to download.</li>
+        </ol>
+    </div>
+</main>
 
-    <script>
-        // Paste button functionality
-        document.getElementById('paste-btn').addEventListener('click', function() {
-            navigator.clipboard.readText().then(function(text) {
-                document.getElementById('instagram-url').value = text;
-            }).catch(function(err) {
-                console.error('Error pasting from clipboard: ', err);
-            });
-        });
+<footer>
+    <p>© 2025 Downsnap. All rights reserved.</p>
+</footer>
 
-        document.getElementById('url-form').addEventListener('submit', function(event) {
-            event.preventDefault();
-            let url = document.getElementById('instagram-url').value;
-            fetch('/download', {
-                method: 'POST',
-                headers: {'Content-Type': 'application/json'},
-                body: JSON.stringify({url: url})
-            })
-            .then(response => response.json())
-            .then(data => {
-                if (data.error) {
-                    alert(data.error);
-                } else {
-                    // Hide input section and show preview
-                    document.getElementById('input-section').style.display = 'none';
-                    document.getElementById('preview-container').style.display = 'block';
-                    let mediaContainer = document.getElementById('media-container');
-                    mediaContainer.innerHTML = '';  // Clear previous content
-                    
-                    // Loop through all media items (images and videos)
-                    data.media.forEach(item => {
-                        let mediaElement;
-                        let downloadButton = document.createElement('button');
-                        downloadButton.innerText = 'Download';
-                        downloadButton.onclick = function() {
-                            window.location.href = '/download-file?url=' + encodeURIComponent(item.url);
-                        };
-
-                        if (item.type === 'video') {
-                            mediaElement = document.createElement('video');
-                            mediaElement.src = '/download-file?url=' + encodeURIComponent(item.url);
-                            mediaElement.controls = true;
-                        } else {
-                            mediaElement = document.createElement('img');
-                            mediaElement.src = '/download-file?url=' + encodeURIComponent(item.url);
-                            mediaElement.alt = "Instagram Image";
-                        }
-
-                        // Wrap media element and button
-                        let mediaWrapper = document.createElement('div');
-                        mediaWrapper.classList.add('media-wrapper');
-                        mediaWrapper.appendChild(mediaElement);
-                        mediaWrapper.appendChild(downloadButton);
-
-                        mediaContainer.appendChild(mediaWrapper);
-                    });
-                }
-            })
-            .catch(error => console.error('Error fetching media:', error));
-        });
-
-        document.getElementById('back-btn').addEventListener('click', function() {
-            document.getElementById('input-section').style.display = 'block';
-            document.getElementById('preview-container').style.display = 'none';
-        });
-    </script>
 </body>
 </html>
