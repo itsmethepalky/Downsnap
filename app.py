@@ -174,15 +174,24 @@ def robots():
 def serve_ads_txt():
   return send_from_directory(app.template_folder, 'ads.txt')
   
+
+# Serve sitemap.xml from the templates folder
 @app.route('/sitemap.xml')
+def sitemap_xml():
+    return render_template('sitemap.xml'), 200, {'Content-Type': 'application/xml'}
+
+# Serve sitemap.html from the root folder
+@app.route('/sitemap')
 def sitemap():
-    return send_from_directory(app.root_path, 'sitemap.xml')
-    
+    return send_from_directory(app.root_path, 'sitemap.html')
 
 @app.errorhandler(404)
 def page_not_found(e):
     return render_template('404.html'), 404
-    
+@app.route('/amp')
+
+def amp_page():
+    return render_template('amp_index.html')  # This is your AMP version
   
 @app.route('/logo.png')
 def logo():
