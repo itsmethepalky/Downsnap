@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html amp lang="en">
+<html ⚡ lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width,minimum-scale=1,initial-scale=1">
@@ -17,10 +17,11 @@
     <link rel="icon" type="image/png" href="/static/favicon.png">
 
     <!-- AMP Boilerplate -->
-    <script async src="https://cdn.ampproject.org/v0.js"></script>
     <style amp-boilerplate>
         body {
             -webkit-animation: none;
+            -moz-animation: none;
+            -ms-animation: none;
             animation: none;
         }
     </style>
@@ -28,15 +29,21 @@
         <style amp-boilerplate>
             body {
                 -webkit-animation: none;
+                -moz-animation: none;
+                -ms-animation: none;
                 animation: none;
             }
         </style>
     </noscript>
 
+    <!-- AMP Runtime -->
+    <script async src="https://cdn.ampproject.org/v0.js"></script>
+
     <!-- AMP Components -->
     <script async custom-element="amp-form" src="https://cdn.ampproject.org/v0/amp-form-0.1.js"></script>
     <script async custom-element="amp-img" src="https://cdn.ampproject.org/v0/amp-img-0.1.js"></script>
 
+    <!-- Custom Styles -->
     <style amp-custom>
         body {
             font-family: Arial, sans-serif;
@@ -114,6 +121,16 @@
         <form method="post" action-xhr="/download">
             <input type="url" name="url" placeholder="Enter Instagram URL" required>
             <button type="submit">Fetch Media</button>
+            <div submit-success>
+                <template type="amp-mustache">
+                    <p>Media downloaded successfully!</p>
+                </template>
+            </div>
+            <div submit-error>
+                <template type="amp-mustache">
+                    <p>Error: Unable to download media. Please try again.</p>
+                </template>
+            </div>
         </form>
     </div>
 
