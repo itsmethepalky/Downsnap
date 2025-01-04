@@ -8,9 +8,16 @@ from datetime import datetime
 app = Flask(__name__,
 static_url_path='/static')
 
+
+
 # Get the secret key from the environment variable
 # Create an instance of the Instaloader class
 L = instaloader.Instaloader()
+@app.before_request
+def redirect_to_non_www():
+    if request.host == 'www.downsnap.onrender.com':  # WWW
+        return redirect("https://downsnap.onrender.com" + request.full_path, code=301)
+
 
 def extract_instagram_data(url):
     try:
