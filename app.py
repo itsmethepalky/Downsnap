@@ -5,7 +5,8 @@ from io import BytesIO
 from datetime import datetime
 
 
-app = Flask(__name__)
+app = Flask(__name__,
+static_url_path='/static')
 
 # Get the secret key from the environment variable
 # Create an instance of the Instaloader class
@@ -166,5 +167,29 @@ def disclaimer():
 @app.route('/thankyou')
 def thankyou():
     return render_template('thankyou.html')
+@app.route('/robots.txt')
+def robots():
+    return send_from_directory(app.template_folder, 'robots.txt')
+@app.route('/ads.txt')
+def serve_ads_txt():
+  return send_from_directory(app.template_folder, 'ads.txt')
+  
+@app.route('/sitemap.xml')
+def sitemap():
+    return send_from_directory(app.root_path, 'sitemap.xml')
+    
+
+@app.errorhandler(404)
+def page_not_found(e):
+    return render_template('404.html'), 404
+    
+  
+@app.route('/logo.png')
+def logo():
+    return send_from_directory(app.root_path, 'logo.png')
+    
+
+    
+
 if __name__ == "__main__":
     app.run(debug=True)
