@@ -1,11 +1,13 @@
 import instaloader
 import requests
-from flask import Flask, request, jsonify, render_template, send_file, send_from_directory
+from flask import Flask, request, jsonify, render_template, send_file, send_from_directory, redirect
 from io import BytesIO
 from datetime import datetime
 
+
 app = Flask(__name__)
 
+# Get the secret key from the environment variable
 # Create an instance of the Instaloader class
 L = instaloader.Instaloader()
 
@@ -55,7 +57,7 @@ def extract_instagram_data(url):
 
 @app.route("/")
 def home():
-    return render_template("index.html", title="Instagram Downloader")
+    return render_template("index.html", title="SnapInsta")
 
 @app.route("/download", methods=["POST"])
 def download():
@@ -124,5 +126,45 @@ def serve_sw():
     """Serve the service worker file."""
     return send_from_directory('', 'sw.js', mimetype='application/javascript')
 
+
+# Contact Us route
+
+    
+@app.route('/story-downloader')
+def story_downloader():
+    return render_template('index.html')
+
+@app.route('/reels-downloader')
+def reels_downloader():
+    return render_template('index.html')
+
+
+
+@app.route('/about')
+def about():
+    return render_template('about.html')
+
+@app.route('/contact')
+def contact():
+    return render_template('contact.html')
+
+@app.route('/blog')
+def blog():
+    return render_template('blog.html')
+
+@app.route('/terms')
+def terms():
+    return render_template('terms.html')
+
+@app.route('/privacy')
+def privacy():
+    return render_template('privacy.html')
+@app.route('/disclaimer')
+def disclaimer():
+    return render_template('disclaimer.html')
+    
+@app.route('/thankyou')
+def thankyou():
+    return render_template('thankyou.html')
 if __name__ == "__main__":
     app.run(debug=True)
