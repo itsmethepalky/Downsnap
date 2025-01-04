@@ -12,14 +12,16 @@ body {
 }
 header{
   height: 20px;
-  color: linear-gradient(90deg, yellow,pink);
+  background-color: linear-gradient(90deg, yellow,pink);
 }
 header h1{
-  font-size: 25px;
-  background: -webkit-linear-gradient(180deg,yellow, pink);
+  font-size: 17px;
+  background: -webkit-linear-gradient(85deg,yellow, pink);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
-
+  visibility: visible ;
+  margin-top: 10px;
+text-align: center;
 }
 .header {
     background-color: #fff;
