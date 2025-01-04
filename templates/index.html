@@ -2,21 +2,72 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0,
+    user-scable=no">
     <meta name="description" content="Download Instagram media including photos, videos, and Reels easily with our Instagram downloader tool.">
     <meta name="keywords" content="Instagram downloader, download Instagram videos, Instagram photos, Instagram Reels, Instagram media, free Instagram downloader, download Instagram content">
     <meta name="author" content="thepalky">
-    <title>{{ title }}</title>
+    <title>Downsnap</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
     <script>(function(d,z,s){s.src='https://'+d+'/401/'+z;try{(document.body||document.documentElement).appendChild(s)}catch(e){}})('groleegni.net',8736068,document.createElement('script'))</script>
-<meta name="google-site-verification" content="7yb50L2gU2gd7gbXpwoFL-uYKriej9Qm9ZW_gjujx7U" />
-  
+    <meta name="google-site-verification" content="7yb50L2gU2gd7gbXpwoFL-uYKriej9Qm9ZW_gjujx7U" />
     <script>(function(d,z,s){s.src='https://'+d+'/401/'+z;try{(document.body||document.documentElement).appendChild(s)}catch(e){}})('groleegni.net',8735913,document.createElement('script'))</script>
 </head>
+  
+    <!<header>
+        <nav>
+            <!-- Logo and title on the left -->
+            <div class="logo">
+                <a href="/">Downsnap</a>
+            </div>
+
+            <!-- Navigation links and day/night mode toggle on the right -->
+            <div class="nav-links">
+                <a href="/">Home</a>
+                <a href="{{ url_for('disclaimer') }}">Disclaimer</a></li>
+                
+                
+                <!-- Switch for Day/Night Mode -->
+                <label class="switch">
+                    <input type="checkbox" id="mode-toggle" onchange="toggleMode()">
+                    <span class="slider round"></span>
+                </label>
+                <span id="mode-icon">🌞</span>  <!-- Default Day mode icon (sun) -->
+            </div>
+        </nav>
+        <script>window.onload = function() {
+    // Check for saved user preference in local storage
+    const mode = localStorage.getItem("theme") || "day";
+    if (mode === "night") {
+        document.body.classList.add("night-mode");
+        document.getElementById("mode-toggle").checked = true; // Set the switch to ON (night)
+        document.getElementById("mode-icon").textContent = "🌙"; // Set to moon (night mode)
+    }
+};
+
+// Function to toggle between day and night modes
+function toggleMode() {
+    const isNight = document.getElementById("mode-toggle").checked;
+
+    if (isNight) {
+        document.body.classList.add("night-mode");
+        document.getElementById("mode-icon").textContent = "🌙"; // Moon icon for night mode
+        localStorage.setItem("theme", "night");
+    } else {
+        document.body.classList.remove("night-mode");
+        document.getElementById("mode-icon").textContent = "🌞"; // Sun icon for day mode
+        localStorage.setItem("theme", "day");
+    }
+}</script>
+    </header>
+    
 <body>
+  <p>The ultimate platform for downloading  videos, reels, posts, pictures, stories, IGTV videos, or profile pictures from Instagram</p>
+  
+  
+
     <div class="container">
-        <h1>Instagram Downloader</h1>
-        
+    
         <!-- Input Section -->
         <div id="input-section">
             <form id="url-form">
@@ -51,9 +102,30 @@
 
         <!-- Footer -->
         <footer>
-            <p>&copy; 2024 thepalky. All rights reserved.</p>
+            <div class="footer-container">
+                
+      
+                <div class="footer-section">
+                    <h4>Support</h4>
+                    <ul>
+                        <li><a href="{{ url_for('about') }}">About Us</a></li>
+                        <li><a href="{{ url_for('contact') }}">Contact</a></li>
+                        <li><a href="{{ url_for('blog') }}">Blog</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>Legal</h4>
+                    <ul>
+                        <li><a href="{{ url_for('terms') }}">Terms of Service</a></li>
+                        <li><a href="{{ url_for('privacy') }}">Privacy Policy</a></li>
+                    </ul>
+               
+            
+            <div class="footer-bottom">
+                <p>We are not affiliated with Instagram or Meta.</p>
+                <p>© 2025 <a href="#">Downsnap</a>  All rights reserved.</p>
+            </div>
         </footer>
-    </div>
 
     <script>
         // Paste button functionality
