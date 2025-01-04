@@ -1,6 +1,10 @@
+# Allow all search engines to crawl the website
 User-agent: *
-Disallow: /private/
-Disallow: /admin/
-Allow: / 
+Disallow:
 
-Sitemap: https://downsnap.onrender.com/sitemap.xml
+# Disallow access to any potential admin areas or private directories
+Disallow: /admin/
+Disallow: /private/
+
+# Specify the location of the sitemap
+Sitemap: https://downsnap.onrender.com/sitemap.html
