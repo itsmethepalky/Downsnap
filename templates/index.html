@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -7,9 +8,9 @@
     <meta name="robots" content="index, follow">
     <meta name="googlebot" content="index, follow">
     <meta name="bingbot" content="index, follow">
-    <meta name="description" content="Download Instagram media including photos, videos, and Reels easily with our Instagram downloader tool. It is completely free and easy to use with friendly ui for all devices. it is similar like snapinsta, snaptik, snapsave.">
-    <meta name="title" content="Downsnap - Instagram videos, media, Reels, story, photos, Download, snapsave, snapinsta">
-    <meta name="keywords" content="Instagram downloader, download Instagram videos, Instagram photos, Instagram Reels, Instagram media, free Instagram downloader, download Instagram content, snapsave,snapinsta">
+    <meta name="description" content="Download Instagram media including photos, videos, and Reels easily with our Instagram downloader tool. It is completely free and easy to use with all devices. it is similar like snapinsta, snaptik, snapsave.">
+    <meta name="title" content="Downsnap - Instagram Media Downloader">
+    <meta name="keywords" content="Instagram downloader, download Instagram videos, Instagram photos, Instagram Reels, Instagram media, free Instagram downloader, download Instagram content, snapsave, snapinsta, instagram downloader, insta downloader, instagram reels downloader, instagram media downloader, snapsave, snaptik, igdownloader, igsave, snaptik.app, snapinsta.app, snapsave.app, all in one downloader, instadownloader, instagramdownloader, instagrammediadowbloader">
     <meta name="author" content="thepalky">
     <meta property="og:title" content="Downsnap" />
 <meta property="og:description" content="Join Downsnap on social media for updates and more." />
@@ -23,7 +24,7 @@
 <meta name="twitter:description" content="Join Downsnap on social media for updates and more." />
 <meta name="twitter:image" content="https://lh3.googleusercontent.com/d/1Jq3-LRieYYUveYpYVTmFhuWTMaCgCO4t" />
 <meta name="twitter:url" content="https://downsnap.onrender.com/" />
-    <title>Downsnap - Instagram videos, media, Reels, story, photos, Download, snapsave, snapinsta</title>
+    <title>Downsnap - Instagram All In One Downloader</title>
     <link rel="amphtml" href="https://downsnap.onrender.com/amp/">
     <link rel="icon" type="image/png" href="{{ url_for('static', filename='favicon.png') }}">
     <link rel="canonical" href="https://downsnap.onrender.com" />
@@ -165,13 +166,37 @@ function toggleMode() {
                         <li><a href="{{ url_for('privacy') }}">Privacy Policy</a></li>
                          <li><a href="{{ url_for('sitemap') }}">Sitemap</a></li>
                     </ul>
+                
                </div>
+              
+               
                <div class="footer-bottom"
             <p>__________________________________________</p>
             
                 <p>We are not affiliated with Instagram or Meta.</p>
                 <p>© 2025 <a href="#">Downsnap</a>  All rights reserved.</p>
             </div>
+             <p class="share-text">Share this content:</p>
+        <div class="social-buttons">
+            <!-- Facebook Share -->
+            <a href="https://www.facebook.com/sharer/sharer.php?u={{ url }}" 
+               class="btn facebook" target="_blank">Facebook</a>
+
+            <!-- Twitter Share -->
+            <a href="https://twitter.com/intent/tweet?url={{ url }}&text={{ title }}" 
+               class="btn twitter" target="_blank">Twitter</a>
+
+            <!-- LinkedIn Share -->
+            <a href="https://www.linkedin.com/sharing/share-offsite/?url={{ url }}" 
+               class="btn linkedin" target="_blank">LinkedIn</a>
+
+            <!-- WhatsApp Share -->
+            <a href="https://api.whatsapp.com/send?text={{ title }} {{ url }}" 
+               class="btn whatsapp" target="_blank">WhatsApp</a>
+
+            <!-- Telegram Share -->
+            <a href="https://t.me/share/url?url={{ url }}&text={{ title }}" 
+               class="btn telegram" target="_blank">Telegram</a> </div
         </footer>
 
     <script>
