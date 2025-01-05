@@ -196,6 +196,10 @@ def sitemap_xml():
 @app.route('/sitemap')
 def sitemap():
     return send_from_directory(app.root_path, 'sitemap.html')
+    
+@app.route('/favicon')
+def favicon():
+    return send_from_directory(os.path.join(app.root_path), 'favicon.ico')
 
 @app.errorhandler(404)
 def page_not_found(e):
