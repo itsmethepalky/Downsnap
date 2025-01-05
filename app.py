@@ -65,7 +65,12 @@ def extract_instagram_data(url):
 
 @app.route("/")
 def home():
-    return render_template("index.html", title="SnapInsta")
+    content_url = "https://downsnap.onrender.com/"
+    content_description = "Download and share videos easily using Downsnap."
+
+    return render_template("index.html", title="Downsnap",
+    content_title="Check ou Downsnap",
+    url=content_url,  description=content_description)
 
 @app.route("/download", methods=["POST"])
 def download():
