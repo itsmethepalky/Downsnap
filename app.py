@@ -199,7 +199,7 @@ def sitemap():
     
 @app.route('/favicon')
 def favicon():
-    return send_from_directory(os.path.join(app.root_path), 'favicon.ico')
+    return send_from_directory(app.root_path, 'favicon.ico')
 
 @app.errorhandler(404)
 def page_not_found(e):
