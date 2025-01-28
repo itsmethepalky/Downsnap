@@ -3,8 +3,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0,
-    user-scable=no">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
     <meta name="robots" content="index, follow">
     <meta name="googlebot" content="index, follow">
     <meta name="bingbot" content="index, follow">
@@ -180,27 +179,40 @@ function toggleMode() {
                 <p>We are not affiliated with Instagram or Meta.</p>
                 <p>© 2025 <a href="#">Downsnap</a>  All rights reserved.</p>
             </div>
-             <p class="share-text">Share this content:</p>
-        <div class="social-buttons">
-            <!-- Facebook Share -->
-            <a href="https://www.facebook.com/sharer/sharer.php?u={{ url }}" 
-               class="btn facebook" target="_blank">Facebook</a>
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
 
-            <!-- Twitter Share -->
-            <a href="https://twitter.com/intent/tweet?url={{ url }}&text={{ title }}" 
-               class="btn twitter" target="_blank">Twitter</a>
+<p class="share-text">Share this content:</p>
+<div class="social-buttons">
+    <!-- Facebook -->
+    <a href="https://www.facebook.com/sharer/sharer.php?u={{ url }}" 
+       class="btn facebook" target="_blank" aria-label="Share on Facebook">
+       <i class="fab fa-facebook-f"></i>
+    </a>
 
-            <!-- LinkedIn Share -->
-            <a href="https://www.linkedin.com/sharing/share-offsite/?url={{ url }}" 
-               class="btn linkedin" target="_blank">LinkedIn</a>
+    <!-- Twitter -->
+    <a href="https://twitter.com/intent/tweet?url={{ url }}&text={{ title }}" 
+       class="btn twitter" target="_blank" aria-label="Share on Twitter">
+       <i class="fab fa-twitter"></i>
+    </a>
 
-            <!-- WhatsApp Share -->
-            <a href="https://api.whatsapp.com/send?text={{ title }} {{ url }}" 
-               class="btn whatsapp" target="_blank">WhatsApp</a>
+    <!-- LinkedIn -->
+    <a href="https://www.linkedin.com/sharing/share-offsite/?url={{ url }}" 
+       class="btn linkedin" target="_blank" aria-label="Share on LinkedIn">
+       <i class="fab fa-linkedin-in"></i>
+    </a>
 
-            <!-- Telegram Share -->
-            <a href="https://t.me/share/url?url={{ url }}&text={{ title }}" 
-               class="btn telegram" target="_blank">Telegram</a> </div
+    <!-- WhatsApp -->
+    <a href="https://api.whatsapp.com/send?text={{ title }} {{ url }}" 
+       class="btn whatsapp" target="_blank" aria-label="Share on WhatsApp">
+       <i class="fab fa-whatsapp"></i>
+    </a>
+
+    <!-- Telegram -->
+    <a href="https://t.me/share/url?url={{ url }}&text={{ title }}" 
+       class="btn telegram" target="_blank" aria-label="Share on Telegram">
+       <i class="fab fa-telegram-plane"></i>
+    </a>
+</div>
         </footer>
 
     <script>
