@@ -21,7 +21,8 @@ header h1{
   -webkit-text-fill-color: transparent;
   visibility: visible ;
   margin-top: 10px;
-text-align: center;
+text-align: left;
+margin-left: 10px;
 }
 .header {
     background-color: #fff;
@@ -216,7 +217,7 @@ button {
     padding: 10px;
     font-size: 16px;
     background-color: #28a745;
-    color: white;
+    color: #ffffff;
     border: none;
     border-radius: 13px;
     cursor: pointer;
