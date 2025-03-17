@@ -1,23 +1,36 @@
+import os
 import instaloader
+import datetime
 import requests
-from flask import Flask, request, jsonify, render_template, send_file, send_from_directory, redirect
+from flask import Flask, request, jsonify, render_template, send_file, send_from_directory, redirect, url_for
 from io import BytesIO
-from datetime import datetime
+from supabase import create_client, Client
+from werkzeug.utils import secure_filename
+import uuid
 
+app = Flask(__name__, static_url_path='/static')
 
-app = Flask(__name__,
-static_url_path='/static')
+# Supabase Configuration
+SUPABASE_URL = "https://blhepmcjpzyrmoowqswk.supabase.co"
+SUPABASE_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImJsaGVwbWNqcHp5cm1vb3dxc3drIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDIyMTY4MjAsImV4cCI6MjA1Nzc5MjgyMH0.GIM_xTqed1R1Dmgpmp85fZr_cs2m2FDw4488nmKHCLs"
+supabase: Client = create_client(SUPABASE_URL, SUPABASE_KEY)
 
+# Upload folder for images
+app.config['UPLOAD_FOLDER'] = "static/uploads"
+app.config['ALLOWED_EXTENSIONS'] = {'png', 'jpg', 'jpeg', 'gif'}
+os.makedirs(app.config['UPLOAD_FOLDER'], exist_ok=True)
 
+# Function to check allowed file types
+def allowed_file(filename):
+    return '.' in filename and filename.rsplit('.', 1)[1].lower() in app.config['ALLOWED_EXTENSIONS']
 
-# Get the secret key from the environment variable
 # Create an instance of the Instaloader class
 L = instaloader.Instaloader()
+
 @app.before_request
 def redirect_to_non_www():
     if request.host == 'www.downsnap.onrender.com':  # WWW
         return redirect("https://downsnap.onrender.com" + request.full_path, code=301)
-
 
 def extract_instagram_data(url):
     try:
@@ -54,9 +67,6 @@ def extract_instagram_data(url):
                     "type": "image"
                 })
 
-        # Log the media items for debugging
-        print("Extracted media items:", media_items)
-
         return media_items
 
     except Exception as e:
@@ -69,8 +79,8 @@ def home():
     content_description = "Download and share videos easily using Downsnap."
 
     return render_template("index.html", title="Downsnap",
-    content_title="Check ou Downsnap",
-    url=content_url,  description=content_description)
+    content_title="Check out Downsnap",
+    url=content_url, description=content_description)
 
 @app.route("/download", methods=["POST"])
 def download():
@@ -101,7 +111,7 @@ def download_file():
         content_type = response.headers.get('Content-Type', '').lower()
 
         # Get the current date and time for the filename
-        now = datetime.now()
+        now = datetime.datetime.now()
         timestamp = now.strftime("%Y-%m-%d_%H-%M-%S")  # Format: YYYY-MM-DD_HH-MM-SS
 
         # Extract the file extension based on the media type
@@ -133,37 +143,95 @@ def download_file():
         print(f"Error: {e}")
         return jsonify({"error": "Failed to download the file"}), 500
 
-# Route to serve the sw.js file for service worker verification
 @app.route('/sw.js')
 def serve_sw():
     """Serve the service worker file."""
     return send_from_directory('', 'sw.js', mimetype='application/javascript')
 
+# Blog routes
+@app.route("/add_blog", methods=["GET", "POST"])
+def add_blog():
+    if request.method == "POST":
+        title = request.form["title"]
+        content = request.form["content"]
+        image_url = None
 
-# Contact Us route
+        if "image" in request.files:
+            file = request.files["image"]
+            if file and allowed_file(file.filename):
+                filename = secure_filename(file.filename)
+                file_path = os.path.join(app.config['UPLOAD_FOLDER'], filename)
+                file.save(file_path)
 
-    
-@app.route('/story-downloader')
-def story_downloader():
-    return render_template('index.html')
+                # Upload image to Supabase Storage
+                with open(file_path, "rb") as f:
+                    response = supabase.storage.from_("blog-images").upload(filename, f)
+                
+                # Generate public URL for the image
+                image_url = f"{SUPABASE_URL}/storage/v1/object/public/blog-images/{filename}"
 
-@app.route('/reels-downloader')
-def reels_downloader():
-    return render_template('index.html')
+        # Insert blog into Supabase
+        data = {
+            "title": title,
+            "content": content,
+            "image_url": image_url,
+            "date_posted": datetime.datetime.utcnow().isoformat()
+        }
+        supabase.table("blogs").insert(data).execute()
 
+        return redirect(url_for("blog"))
 
+    return render_template("add_blog.html")
 
-@app.route('/about')
-def about():
-    return render_template('about.html')
-
-@app.route('/contact')
-def contact():
-    return render_template('contact.html')
-
-@app.route('/blog')
+# Route to view all blogs
+@app.route("/blog")
 def blog():
-    return render_template('blog.html')
+    blogs = supabase.table("blogs").select("*").order("date_posted", desc=True).execute()
+    return render_template("blog.html", blogs=blogs.data)
+
+# Route to edit a blog post
+@app.route("/edit_blog/<int:id>", methods=["GET", "POST"])
+def edit_blog(id):
+    blog = supabase.table("blogs").select("*").eq("id", id).execute().data[0]
+
+    if request.method == "POST":
+        title = request.form["title"]
+        content = request.form["content"]
+        image_url = blog["image_url"]
+
+        if "image" in request.files:
+            file = request.files["image"]
+            if file and allowed_file(file.filename):
+                filename = secure_filename(file.filename)
+                file_path = os.path.join(app.config['UPLOAD_FOLDER'], filename)
+                file.save(file_path)
+
+                # Upload new image to Supabase Storage
+                with open(file_path, "rb") as f:
+                    response = supabase.storage.from_("blog-images").upload(filename, f)
+
+                # Generate new public URL
+                image_url = f"{SUPABASE_URL}/storage/v1/object/public/blog-images/{filename}"
+
+        # Update blog in Supabase
+        supabase.table("blogs").update({"title": title, "content": content, "image_url": image_url}).eq("id", id).execute()
+        return redirect(url_for("blog"))
+
+    return render_template("edit_blog.html", blog=blog)
+
+# Route to delete a blog post
+@app.route("/delete_blog/<int:id>", methods=["POST"])
+def delete_blog(id):
+    blog = supabase.table("blogs").select("image_url").eq("id", id).execute().data[0]
+
+    # Delete image from Supabase Storage
+    if blog["image_url"]:
+        filename = blog["image_url"].split("/")[-1]
+        supabase.storage.from_("blog-images").remove(filename)
+
+    # Delete blog post
+    supabase.table("blogs").delete().eq("id", id).execute()
+    return redirect(url_for("blog"))
 
 @app.route('/terms')
 def terms():
@@ -172,49 +240,46 @@ def terms():
 @app.route('/privacy')
 def privacy():
     return render_template('privacy.html')
+
 @app.route('/disclaimer')
 def disclaimer():
     return render_template('disclaimer.html')
-    
+
 @app.route('/thankyou')
 def thankyou():
     return render_template('thankyou.html')
+
 @app.route('/robots.txt')
 def robots():
     return send_from_directory(app.template_folder, 'robots.txt')
+
 @app.route('/ads.txt')
 def serve_ads_txt():
-  return send_from_directory(app.template_folder, 'ads.txt')
-  
+    return send_from_directory(app.template_folder, 'ads.txt')
 
-# Serve sitemap.xml from the templates folder
 @app.route('/sitemap.xml')
 def sitemap_xml():
     return render_template('sitemap.xml'), 200, {'Content-Type': 'application/xml'}
 
-# Serve sitemap.html from the root folder
 @app.route('/sitemap')
 def sitemap():
     return send_from_directory(app.root_path, 'sitemap.html')
-    
-@app.route('/favicon')
+
+@app.route('/favicon.ico')
 def favicon():
     return send_from_directory(app.root_path, 'favicon.ico')
 
 @app.errorhandler(404)
 def page_not_found(e):
     return render_template('404.html'), 404
-@app.route('/amp')
 
+@app.route('/amp')
 def amp_page():
-    return render_template('amp_index.html')  # This is your AMP version
-  
+    return render_template('amp_index.html')
+
 @app.route('/logo.png')
 def logo():
     return send_from_directory(app.root_path, 'logo.png')
-    
-
-    
 
 if __name__ == "__main__":
     app.run(debug=True)
