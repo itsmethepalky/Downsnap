@@ -3,185 +3,28 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="robots" content="index, nofollow">
-    <title>Blog - Downsnap</title>
-    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Roboto:wght@300;400&display=swap" rel="stylesheet">
-    <style>
-        body {
-            margin: 0;
-            padding: 0;
-            font-family: 'Roboto', sans-serif;
-            background-color: #f4f4f9;
-            color: #333;
-        }
-        .container {
-            max-width: 1000px;
-            margin: 50px auto;
-            padding: 30px;
-            background: #fff;
-            border: 1px solid #e0e0e0;
-            border-radius: 10px;
-            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-        }
-        h1 {
-            font-family: 'Playfair Display', serif;
-            font-size: 36px;
-            color: #2c3e50;
-            margin-bottom: 20px;
-            text-align: center;
-        }
-        .post {
-            margin-bottom: 40px;
-            padding-bottom: 30px;
-            border-bottom: 1px solid #e0e0e0;
-        }
-        .post h2 {
-            font-family: 'Playfair Display', serif;
-            font-size: 28px;
-            color: #34495e;
-            margin-bottom: 15px;
-        }
-        .post .date {
-            font-size: 14px;
-            color: #7f8c8d;
-            margin-bottom: 15px;
-        }
-        .post p {
-            font-size: 16px;
-            line-height: 1.8;
-            margin-bottom: 20px;
-        }
-        .post a {
-            font-weight: bold;
-            color: #2c3e50;
-            text-decoration: none;
-        }
-        .post a:hover {
-            text-decoration: underline;
-        }
-        footer {
-            text-align: center;
-            margin-top: 50px;
-            font-size: 14px;
-            color: #7f8c8d;
-        }
-
-        /* Modal styles */
-        .modal {
-            display: none;
-            position: fixed;
-            z-index: 1;
-            padding-top: 60px;
-            left: 0;
-            top: 0;
-            width: 100%;
-            height: 100%;
-            overflow: auto;
-            background-color: rgb(0,0,0);
-            background-color: rgba(0,0,0,0.4);
-            transition: all 0.3s ease-in-out;
-        }
-        .modal-content {
-            background-color: #fff;
-            margin: 5% auto;
-            padding: 40px;
-            border: 1px solid #888;
-            width: 80%;
-            border-radius: 10px;
-            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-            height: auto;
-            max-height: 90%;
-            overflow-y: auto;
-        }
-        .close {
-            color: #aaa;
-            float: right;
-            font-size: 28px;
-            font-weight: bold;
-            cursor: pointer;
-        }
-        .close:hover,
-        .close:focus {
-            color: black;
-            text-decoration: none;
-            cursor: pointer;
-        }
-    </style>
+    <title>Blog Posts</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
 </head>
 <body>
-
     <div class="container">
-        <h1>Downsnap Blog</h1>
-
-        <!-- Blog Post 1 -->
-        <div class="post">
-            <h2>How to Download Instagram Videos in Seconds</h2>
-            <div class="date">January 4, 2025 | By Downsnap Team</div>
-            <p>Instagram is home to a massive library of captivating videos. Sometimes, you may want to save these videos for offline viewing, but Instagram doesn't allow downloads. In this blog post, we’ll guide you on how to download Instagram videos with Downsnap quickly and easily...</p>
-            <a href="#" onclick="openModal('blog1')">Read More</a>
+        <h1>Blog Posts</h1>
+        <a href="{{ url_for('add_blog') }}" class="action-buttons">Add New Blog</a>
+        {% for blog in blogs %}
+        <div class="blog-post">
+            <h2>{{ blog.title }}</h2>
+            <p>{{ blog.content[:100] }}...</p>
+            {% if blog.image_url %}
+            <img src="{{ blog.image_url }}" alt="Blog Image">
+            {% endif %}
+            <div class="action-buttons">
+                <a href="{{ url_for('edit_blog', id=blog.id) }}">Edit</a>
+                <form action="{{ url_for('delete_blog', id=blog.id) }}" method="post">
+                    <button type="submit">Delete</button>
+                </form>
+            </div>
         </div>
-
-        <!-- Blog Post 2 -->
-        <div class="post">
-            <h2>5 Common Myths About Instagram Downloaders</h2>
-            <div class="date">January 1, 2025 | By Downsnap Team</div>
-            <p>There are plenty of misconceptions about Instagram downloaders. Some people think they are illegal, unsafe, or difficult to use. In this post, we’ll debunk these myths and explain how Downsnap is a secure, easy-to-use tool that adheres to all copyright laws...</p>
-            <a href="#" onclick="openModal('blog2')">Read More</a>
-        </div>
-
-        <!-- More Blog Posts here -->
-        
-        <footer>
-            &copy; 2025 Downsnap. All Rights Reserved.
-        </footer>
+        {% endfor %}
     </div>
-
-    <!-- Modal for Blog 1 -->
-    <div id="blog1" class="modal">
-        <div class="modal-content">
-            <span class="close" onclick="closeModal('blog1')">&times;</span>
-            <h2>How to Download Instagram Videos in Seconds</h2>
-            <div class="date">January 4, 2025 | By Downsnap Team</div>
-            <p>Instagram is home to a massive library of captivating videos. Sometimes, you may want to save these videos for offline viewing, but Instagram doesn't allow downloads. In this blog post, we’ll guide you on how to download Instagram videos with Downsnap quickly and easily. Here's how...</p>
-            <p>First, you’ll need to find the video you want to download. Copy the URL of the post, and then go to our website. Paste the link into the downloader tool on the homepage. After that, hit "Download," and within seconds, you will have your video file on your device. It’s that simple!</p>
-            <p>Downsnap allows you to download Instagram videos in various formats and qualities. We’ve made sure that the process is smooth and quick, so you can enjoy the videos offline at any time. Whether you're using a PC or mobile device, the experience is seamless.</p>
-            <p>One important thing to keep in mind is respecting copyright laws when downloading content. Make sure you have the creator's permission to download and use their media. At Downsnap, we value copyright and ensure that our tool follows legal practices.</p>
-        </div>
-    </div>
-
-    <!-- Modal for Blog 2 -->
-    <div id="blog2" class="modal">
-        <div class="modal-content">
-            <span class="close" onclick="closeModal('blog2')">&times;</span>
-            <h2>5 Common Myths About Instagram Downloaders</h2>
-            <div class="date">January 1, 2025 | By Downsnap Team</div>
-            <p>There are plenty of misconceptions about Instagram downloaders. Some people think they are illegal, unsafe, or difficult to use. In this post, we’ll debunk these myths and explain how Downsnap is a secure, easy-to-use tool that adheres to all copyright laws...</p>
-            <p>Many users believe that Instagram downloaders violate copyright laws, but that is not always the case. Downloading publicly available content, such as videos or images shared by the creator, is perfectly legal as long as you have permission from the owner. Our platform ensures compliance with copyright policies by allowing only downloads of publicly accessible media.</p>
-            <p>Another myth is that Instagram downloaders are unsafe or full of malware. Downsnap has been designed with the security of our users in mind. We ensure a clean and safe experience free from harmful ads and malicious software.</p>
-            <p>Lastly, some believe downloaders are hard to use, but with Downsnap, you can download Instagram content with just a few clicks. Simply paste the URL of the post, select the file format, and hit download.</p>
-        </div>
-    </div>
-
-    <script>
-        // Function to open the modal
-        function openModal(blogId) {
-            var modal = document.getElementById(blogId);
-            modal.style.display = "block";
-        }
-
-        // Function to close the modal
-        function closeModal(blogId) {
-            var modal = document.getElementById(blogId);
-            modal.style.display = "none";
-        }
-
-        // Close modal when clicking outside the modal content
-        window.onclick = function(event) {
-            if (event.target.className == "modal") {
-                event.target.style.display = "none";
-            }
-        }
-    </script>
-
 </body>
 </html>
