@@ -115,6 +115,210 @@ button:hover {
 .action-buttons form button:hover {
     background: #c82333;
 }
+.read-more {
+    color: #007BFF;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+.read-more:hover {
+    text-decoration: underline;
+}
+footer {
+    background-color: #ffff;
+    padding: 20px 10px;
+    
+    color: inherit;
+}
+
+body.night-mode footer {
+    background-color: #444;
+    color: #fff;
+}
+
+.footer-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    margin-bottom: 20px;
+}
+
+.footer-section h4 {
+    margin-bottom: 10px;
+    font-size: 1rem;
+}
+
+.footer-section ul li {
+    margin: 5px 0;
+}
+.footer-bottom {
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+        font-size: 1rem;
+        padding-top: 15px;
+        margin: 10px 0;
+    }
+footer p{
+  text-align: center;
+  font-size: 15px;
+}
+footer a{
+  text-align: center;
+  font-size: 15px;
+}
+.share-text {
+    font-size: 18px;
+    font-weight: bold;
+    margin-bottom: 10px;
+}
+/* General Container for Ads */
+.ad-container {
+  width: 100%;                /* Ensure ad container takes full width */
+  margin: 20px 0;             /* Add space above and below the ad */
+  padding: 10px;              /* Add padding around the ad for spacing */
+  text-align: center;         /* Center the ad within its container */
+  background-color: #f5f5f5;  /* Light background to distinguish ad from content */
+  border: 1px solid #e0e0e0;  /* Light border around the ad */
+  border-radius: 8px;         /* Optional: rounded corners for a cleaner look */
+}
+
+.ad-container iframe,
+.ad-container ins {
+  display: block;             /* Ensure ad elements take block-level display */
+  max-width: 100%;            /* Ensure ads are responsive and fit container */
+  height: auto;               /* Allow ads to scale proportionally */
+  margin: 0 auto;             /* Center the ad horizontally */
+}
+
+.ad-container p {
+  font-size: 14px;            /* Smaller text for ad context */
+  color: #333;                /* Darker text for better readability */
+  margin-top: 10px;           /* Add some space between ad and description */
+}
+
+@media (max-width: 768px) {
+  /* Mobile-friendly Ads */
+  .ad-container {
+    margin: 10px 0;           /* Less margin on mobile */
+    padding: 5px;             /* Less padding for a compact look */
+  }
+
+  .ad-container p {
+    font-size: 12px;          /* Slightly smaller text on mobile */
+  }
+}
+
+/* Styling for Close Button in case you use pop-up/overlays */
+.ad-close-btn {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  background-color: rgba(0, 0, 0, 0.6);
+  color: white;
+  border: none;
+  padding: 5px 10px;
+  font-size: 14px;
+  cursor: pointer;
+  border-radius: 50%;
+  transition: background-color 0.3s;
+}
+
+.ad-close-btn:hover {
+  background-color: rgba(0, 0, 0, 0.8);
+}
+
+/* Styling for AdBanner (e.g., a sticky ad at the bottom of the page) */
+.ad-banner {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  background-color: #333;
+  color: white;
+  text-align: center;
+  padding: 10px 0;
+  z-index: 9999;
+}
+
+.ad-banner a {
+  color: #ff9800;
+  text-decoration: none;
+  font-weight: bold;
+  margin-left: 10px;
+}
+
+.ad-banner a:hover {
+  text-decoration: underline;
+}
+/* Social Buttons */
+.social-buttons {
+    display: flex;
+    gap: 10px;
+    justify-content: center;
+    gap: 15px;
+    flex-wrap: wrap;  /* Makes it responsive */
+}
+
+/* Button Styling */
+.btn {
+    display: inline-block;
+    padding: 10px 15px;
+    font-size: 14px;
+    font-weight: bold;
+    color: #fff;
+    text-decoration: none;
+    border-radius: 5px;
+    transition: background 0.3s ease;
+    text-align: center;
+}
+
+/* Facebook */
+.btn.facebook {
+    color: #8b9dc3;
+}
+.btn.facebook:hover {
+    background-color: #2d4373;
+}
+
+/* Twitter */
+.btn.twitter {
+    color: #87CEEB;
+}
+.btn.twitter:hover {
+    background-color: #0d8bf0;
+}
+
+/* LinkedIn */
+.btn.linkedin {
+    color: #00a0dc;
+}
+.btn.linkedin:hover {
+    background-color: #005983;
+}
+
+/* WhatsApp */
+.btn.whatsapp {
+    color: #50C878;
+}
+.btn.whatsapp:hover {
+    background-color: #1ba958;
+}
+
+/* Telegram */
+.btn.telegram {
+    color: #68C4E8;
+}
+.btn.telegram:hover {
+    background-color: #0077aa;
+}
+body.night-mode .btn.facebook { color: #8b9dc3; }
+body.night-mode .btn.twitter { color: #87CEEB; }
+body.night-mode .btn.linkedin { color: #00a0dc; }
+body.night-mode .btn.whatsapp { color: #50C878; }
+body.night-mode .btn.telegram { color: #68C4E8; }
 
 /* Responsive Design */
 @media (max-width: 600px) {
