@@ -4,11 +4,19 @@ import datetime
 import requests
 from flask import Flask, request, jsonify, render_template, send_file, abort, send_from_directory, redirect, url_for
 from io import BytesIO
+from flask_talisman import Talisman 
 from supabase import create_client, Client
 from werkzeug.utils import secure_filename
 import uuid
 
 app = Flask(__name__, static_url_path='/static')
+
+
+talisman = Talisman(app, strict_transport_security={
+    'max_age': 31536000,  # 1 year
+    'include_subdomains': True,
+    'preload': True
+})
 
 # Supabase Configuration
 SUPABASE_URL = "https://blhepmcjpzyrmoowqswk.supabase.co"
