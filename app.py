@@ -12,11 +12,8 @@ import uuid
 app = Flask(__name__, static_url_path='/static')
 
 
-talisman = Talisman(app, strict_transport_security={
-    'max_age': 31536000,  # 1 year
-    'include_subdomains': True,
-    'preload': True
-})
+
+# Apply Flask-Talisman with HSTS settings
 
 # Supabase Configuration
 SUPABASE_URL = "https://blhepmcjpzyrmoowqswk.supabase.co"
