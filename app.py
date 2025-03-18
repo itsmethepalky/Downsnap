@@ -2,7 +2,7 @@ import os
 import instaloader
 import datetime
 import requests
-from flask import Flask, request, jsonify, render_template, send_file, send_from_directory, redirect, url_for
+from flask import Flask, request, jsonify, render_template, send_file, abort, send_from_directory, redirect, url_for
 from io import BytesIO
 from supabase import create_client, Client
 from werkzeug.utils import secure_filename
@@ -75,12 +75,7 @@ def extract_instagram_data(url):
 
 @app.route("/")
 def home():
-    content_url = "https://downsnap.onrender.com/"
-    content_description = "Download and share videos easily using Downsnap."
-
-    return render_template("index.html", title="Downsnap",
-    content_title="Check out Downsnap",
-    url=content_url, description=content_description)
+    return render_template("index.html", title="Downsnap", content_title="Check out Downsnap")
 
 @app.route("/download", methods=["POST"])
 def download():
@@ -142,11 +137,6 @@ def download_file():
     except Exception as e:
         print(f"Error: {e}")
         return jsonify({"error": "Failed to download the file"}), 500
-
-@app.route('/sw.js')
-def serve_sw():
-    """Serve the service worker file."""
-    return send_from_directory('', 'sw.js', mimetype='application/javascript')
 
 # Blog routes
 @app.route("/add_blog", methods=["GET", "POST"])
@@ -233,6 +223,16 @@ def delete_blog(id):
     supabase.table("blogs").delete().eq("id", id).execute()
     return redirect(url_for("blog"))
 
+@app.route('/blog/<int:blog_id>')
+def view_blog(blog_id):
+    blog = supabase.table("blogs").select("*").eq("id", blog_id).execute().data[0]
+    
+    if not blog:
+        abort(404)
+
+    return render_template('view_blog.html', blog=blog)
+
+# Additional static routes for SEO, contact, terms, etc.
 @app.route('/terms')
 def terms():
     return render_template('terms.html')
@@ -244,6 +244,14 @@ def privacy():
 @app.route('/disclaimer')
 def disclaimer():
     return render_template('disclaimer.html')
+
+@app.route('/about')
+def about():
+    return render_template('about.html')
+    
+@app.route('/contact')
+def contact():
+    return render_template('contact.html')
 
 @app.route('/thankyou')
 def thankyou():
@@ -260,7 +268,7 @@ def serve_ads_txt():
 @app.route('/sitemap.xml')
 def sitemap_xml():
     return render_template('sitemap.xml'), 200, {'Content-Type': 'application/xml'}
-
+    
 @app.route('/sitemap')
 def sitemap():
     return send_from_directory(app.root_path, 'sitemap.html')
