@@ -9,22 +9,109 @@
 <body>
     <div class="container">
         <h1>Blog Posts</h1>
-        <a href="{{ url_for('add_blog') }}" class="action-buttons">Add New Blog</a>
         {% for blog in blogs %}
         <div class="blog-post">
             <h2>{{ blog.title }}</h2>
             <p>{{ blog.content[:100] }}...</p>
             {% if blog.image_url %}
             <img src="{{ blog.image_url }}" alt="Blog Image">
+            
             {% endif %}
-            <div class="action-buttons">
-                <a href="{{ url_for('edit_blog', id=blog.id) }}">Edit</a>
+            <!-- Link to the full blog post -->
+            <a href="{{ url_for('view_blog', blog_id=blog.id) }}" class="read-more">Read More</a>
+        </div>
+        
+  </body>
+  <div class="ad-container">
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+    <ins class="adsbygoogle"
+         style="display:block"
+         data-ad-client="ca-pub-XXXXXX"
+         data-ad-slot="XXXXXX"
+         data-ad-format="auto"></ins>
+    <script>
+         (adsbygoogle = window.adsbygoogle || []).push({});
+    </script>
+    <p>Advertisement</p>
+</div>
+
+<!-- For Sticky Ad Banner -->
+<div class="ad-banner">
+    <p>Check out our <a href="#">special offer!</a></p>
+</div>
+        <!-- Footer -->
+        <footer>
+            <div class="footer-container">
+                
+      
+                <div class="footer-section">
+                    <h4>Support</h4>
+                    <ul>
+                        <li><a href="{{ url_for('about') }}">About Us</a></li>
+                        <li><a href="{{ url_for('contact') }}">Contact</a></li>
+                        <li><a href="{{ url_for('blog') }}">Blog</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>Legal</h4>
+                    <ul>
+                        <li><a href="{{ url_for('terms') }}">Terms of Service</a></li>
+                        <li><a href="{{ url_for('privacy') }}">Privacy Policy</a></li>
+                         <li><a href="{{ url_for('sitemap') }}">Sitemap</a></li>
+                    </ul>
+                
+               </div>
+              
+               
+               <div class="footer-bottom"
+            <p>__________________________________________</p>
+            
+                <p>We are not affiliated with Instagram or Meta.</p>
+                <p>© 2025 <a href="/">Downsnap</a>  All rights reserved.</p>
+            </div>
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+
+<p class="share-text">Share this content:</p>
+<div class="social-buttons">
+    <!-- Facebook -->
+    <a href="https://www.facebook.com/sharer/sharer.php?u={{ url }}" 
+       class="btn facebook" target="_blank" aria-label="Share on Facebook">
+       <i class="fab fa-facebook-f"></i>
+    </a>
+
+    <!-- Twitter -->
+    <a href="https://twitter.com/intent/tweet?url={{ url }}&text={{ title }}" 
+       class="btn twitter" target="_blank" aria-label="Share on Twitter">
+       <i class="fab fa-twitter"></i>
+    </a>
+
+    <!-- LinkedIn -->
+    <a href="https://www.linkedin.com/sharing/share-offsite/?url={{ url }}" 
+       class="btn linkedin" target="_blank" aria-label="Share on LinkedIn">
+       <i class="fab fa-linkedin-in"></i>
+    </a>
+
+    <!-- WhatsApp -->
+    <a href="https://api.whatsapp.com/send?text={{ title }} {{ url }}" 
+       class="btn whatsapp" target="_blank" aria-label="Share on WhatsApp">
+       <i class="fab fa-whatsapp"></i>
+    </a>
+
+    <!-- Telegram -->
+    <a href="https://t.me/share/url?url={{ url }}&text={{ title }}" 
+       class="btn telegram" target="_blank" aria-label="Share on Telegram">
+       <i class="fab fa-telegram-plane"></i>
+    </a>
+</div>
+        </footer>
+</html>
+          <!--
+             <div class="action-buttons">
+                 <a href="{{ url_for('edit_blog', id=blog.id) }}">Edit</a>
                 <form action="{{ url_for('delete_blog', id=blog.id) }}" method="post">
                     <button type="submit">Delete</button>
                 </form>
-            </div>
-        </div>
         {% endfor %}
-    </div>
+    </div>--!>
 </body>
 </html>
