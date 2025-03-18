@@ -31,3 +31,4 @@ urllib3==1.26.20
 Werkzeug==2.0.3
 wrapt==1.17.0
 supabase
+Flask-Talisman
