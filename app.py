@@ -2,7 +2,7 @@ import os
 import instaloader
 import datetime
 import requests
-from flask import Flask, render_template_string, request, jsonify, render_template, send_file, abort, send_from_directory, redirect, url_for
+from flask import Flask, Response, render_template_string, request, jsonify, render_template, send_file, abort, send_from_directory, redirect, url_for
 from io import BytesIO
 from flask_talisman import Talisman 
 from supabase import create_client, Client
