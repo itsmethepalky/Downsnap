@@ -170,7 +170,7 @@ footer {
 {% for blog in blogs %}
     <div class="item">
         <a class="link" href="{{ request.host_url.rstrip('/') }}/blog/{{ blog['slug'] }}">
-            {{ blog['title'] }}
+            {{ blog['title'] }} <!-- Display the blog title here -->
         </a>
     </div>
 {% endfor %}
