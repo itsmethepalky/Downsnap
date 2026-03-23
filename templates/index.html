@@ -24,7 +24,6 @@
 <meta name="twitter:image" content="https://lh3.googleusercontent.com/d/1Jq3-LRieYYUveYpYVTmFhuWTMaCgCO4t" />
 <meta name="twitter:url" content="https://www.downsnap.online/" />
     <title>Instagram Media Downloader</title>
-    <link rel="amphtml" href="https://downsnap.onrender.com/amp/">
     <link rel="icon" href="{{ url_for('static', filename='favicon.ico') }}" type="image/x-icon">
     <link rel="icon" sizes="192x192" href="{{ url_for('static', filename='android_icon.ico') }}" type="image/x-icon">
     <link rel="apple-touch-icon" sizes="120x120" href="{{ url_for('static', filename='apple-touch-icon.ico') }}" type="image/x-icon">
@@ -232,10 +231,10 @@ function toggleMode() {
     </a>
 
     <!-- WhatsApp -->
-    <a href="https://api.whatsapp.com/send?text={{ title }} {{ url }}" 
-       class="btn whatsapp" target="_blank" rel="noopener noreferrer" aria-label="Share on WhatsApp">
-       <i class="fab fa-whatsapp"></i>
-    </a>
+    <a href="https://api.whatsapp.com/send?text={{ title|urlencode }}%20{{ url|urlencode }}" 
+   target="_blank" rel="noopener noreferrer">
+   <i class="fab fa-whatsapp"></i>
+</a>
 
     <!-- Telegram -->
     <a href="https://t.me/share/url?url={{ url }}&text={{ title }}" 
