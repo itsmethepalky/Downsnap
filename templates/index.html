@@ -367,11 +367,11 @@ function acceptCookies() {
     document.getElementById('cookie-consent').style.display = 'none';
 }
 
-window.onload = function() {
+window.addEventListener("load", function() {
     if (document.cookie.split(';').some((c) => c.trim().startsWith('cookies_accepted='))) {
         document.getElementById('cookie-consent').style.display = 'none';
     }
-}
+});
 </script>
 </body>
 </html>
