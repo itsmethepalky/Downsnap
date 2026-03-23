@@ -415,6 +415,7 @@ def blog():
 
 # Route to edit a blog post
 # Edit Blog Route
+@app.route("/blog/edit/<int:id>", methods=["GET", "POST"])
 def edit_blog(id):
     blog = supabase.table("blogs").select("*").eq("id", id).execute().data[0]
 
@@ -446,12 +447,18 @@ def edit_blog(id):
 # Route to delete a blog post
 @app.route("/delete_blog/<int:id>", methods=["POST"])
 def delete_blog(id):
-    blog = supabase.table("blogs").select("image_url").eq("id", id).execute().data[0]
+    result = supabase.table("blogs").select("image_url").eq("id", id).execute()
+    if not result.data:
+        return "Blog not found", 404
+
+    blog = result.data[0]
 
     # Delete image from Supabase Storage
-    if blog["image_url"]:
+    if blog.get("image_url"):
         filename = blog["image_url"].split("/")[-1]
-        supabase.storage.from_("blog-images").remove(filename)
+        resp = supabase.storage.from_("blog-images").remove(filename)
+        if resp.get("error"):
+            print("Supabase Storage Delete Error:", resp["error"])
 
     # Delete blog post
     supabase.table("blogs").delete().eq("id", id).execute()
