@@ -223,8 +223,10 @@ body:not(.night-mode) .media-wrapper {
 
 .media-wrapper img,
 .media-wrapper video {
-    width: 100%;
-    border-radius: 10px;
+      max-width: 100%;
+    height: auto;
+    border-radius: 5px;
+    margin-bottom: 10px;
 }
 
 /* DOWNLOAD BTN */
