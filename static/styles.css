@@ -1,329 +1,410 @@
-/* Global Styles */
-body {
-    font-family: Arial, sans-serif;
-    background-color: #f4f4f4;
+/* =========================
+   RESET + BASE
+========================= */
+* {
     margin: 0;
     padding: 0;
+    box-sizing: border-box;
 }
 
-/* Container */
-.container {
-    width: 90%;
-    max-width: 800px;
-    margin: 20px auto;
-    background: #fff;
-    padding: 20px;
-    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
-    border-radius: 8px;
+body {
+    font-family: "Poppins", sans-serif;
+    background: #0f172a;
+    color: #e2e8f0;
+    transition: all 0.3s ease;
 }
 
-/* Heading */
-h1 {
-    text-align: center;
-    color: #333;
+/* LIGHT MODE */
+body:not(.night-mode) {
+    background: #f8fafc;
+    color: #1e293b;
 }
 
-/* Form Styling */
-form {
-    display: flex;
-    flex-direction: column;
+/* =========================
+   NAVBAR
+========================= */
+header {
+    position: sticky;
+    top: 0;
+    backdrop-filter: blur(12px);
+    background: rgba(15, 23, 42, 0.75);
+    z-index: 1000;
 }
 
-label {
-    font-weight: bold;
-    margin-top: 10px;
+body:not(.night-mode) header {
+    background: rgba(255, 255, 255, 0.8);
 }
 
-input[type="text"],
-textarea,
-input[type="file"] {
-    width: 100%;
-    padding: 10px;
-    margin-top: 5px;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-}
-
-/* Buttons */
-button {
-    background: #007bff;
-    color: #fff;
-    border: none;
-    padding: 10px 15px;
-    margin-top: 15px;
-    cursor: pointer;
-    border-radius: 5px;
-    transition: 0.3s;
-}
-
-button:hover {
-    background: #0056b3;
-}
-
-/* Blog Post List */
-.blog-post {
-    background: #fff;
-    padding: 15px;
-    margin: 10px 0;
-    border-radius: 5px;
-    box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.1);
-}
-
-.blog-post h2 {
-    margin: 0;
-    color: #333;
-}
-
-.blog-post p {
-    color: #666;
-}
-
-.blog-post img {
-    width: 100%;
-    max-height: 300px;
-    object-fit: cover;
-    border-radius: 5px;
-    margin-top: 10px;
-}
-
-/* Action Buttons */
-.action-buttons {
+nav {
     display: flex;
     justify-content: space-between;
-    margin-top: 10px;
+    align-items: center;
+    padding: 15px 8%;
 }
 
-.action-buttons a,
-.action-buttons form button {
+nav h1 {
+    font-size: 22px;
+    color: #38bdf8;
+    font-weight: 700;
+}
+
+/* NAV LINKS */
+.nav-links {
+    display: flex;
+    align-items: center;
+    gap: 18px;
+}
+
+.nav-links a {
     text-decoration: none;
-    background: #28a745;
-    color: #fff;
-    padding: 8px 12px;
-    border-radius: 5px;
+    color: #cbd5f5;
+    font-size: 14px;
     transition: 0.3s;
+}
+
+.nav-links a:hover {
+    color: #38bdf8;
+}
+
+body:not(.night-mode) .nav-links a {
+    color: #334155;
+}
+
+/* =========================
+   TOGGLE SWITCH
+========================= */
+.switch {
+    position: relative;
+    width: 42px;
+    height: 22px;
+}
+
+.switch input {
+    display: none;
+}
+
+.slider {
+    position: absolute;
+    cursor: pointer;
+    background: #334155;
+    border-radius: 50px;
+    inset: 0;
+    transition: 0.4s;
+}
+
+.slider:before {
+    content: "";
+    position: absolute;
+    width: 16px;
+    height: 16px;
+    left: 4px;
+    bottom: 3px;
+    background: white;
+    border-radius: 50%;
+    transition: 0.4s;
+}
+
+input:checked + .slider {
+    background: #38bdf8;
+}
+
+input:checked + .slider:before {
+    transform: translateX(18px);
+}
+
+/* =========================
+   HERO TEXT
+========================= */
+h2 {
     text-align: center;
+    padding: 25px 20px;
+    font-size: 18px;
+    color: #94a3b8;
 }
 
-.action-buttons a:hover {
-    background: #218838;
+body:not(.night-mode) h2 {
+    color: #475569;
 }
 
-.action-buttons form button {
-    background: #dc3545;
+/* =========================
+   MAIN CONTAINER
+========================= */
+.container {
+    max-width: 800px;
+    margin: auto;
+    padding: 20px;
 }
 
-.action-buttons form button:hover {
-    background: #c82333;
-}
-.read-more {
-    color: #007BFF;
-    text-decoration: none;
-    font-weight: bold;
+/* =========================
+   INPUT SECTION
+========================= */
+#input-section {
+    background: rgba(255,255,255,0.05);
+    padding: 25px;
+    border-radius: 14px;
+    box-shadow: 0 10px 40px rgba(0,0,0,0.25);
+    transition: 0.3s;
 }
 
-.read-more:hover {
-    text-decoration: underline;
+#input-section:hover {
+    transform: translateY(-3px);
 }
+
+body:not(.night-mode) #input-section {
+    background: white;
+}
+
+/* INPUT GROUP */
+.input-group {
+    display: flex;
+    border-radius: 10px;
+    overflow: hidden;
+}
+
+.input-group input {
+    flex: 1;
+    padding: 12px;
+    border: none;
+    outline: none;
+    font-size: 14px;
+    background: #1e293b;
+    color: white;
+}
+
+body:not(.night-mode) .input-group input {
+    background: #f1f5f9;
+    color: black;
+}
+
+.input-group button {
+    background: #38bdf8;
+    border: none;
+    padding: 0 15px;
+    color: white;
+    cursor: pointer;
+}
+
+/* DOWNLOAD BUTTON */
+#url-form button[type="submit"] {
+    width: 100%;
+    margin-top: 12px;
+    padding: 12px;
+    border-radius: 10px;
+    border: none;
+    background: linear-gradient(90deg, #38bdf8, #6366f1);
+    color: white;
+    font-weight: 600;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+#url-form button:hover {
+    transform: scale(1.03);
+}
+
+/* =========================
+   PREVIEW
+========================= */
+#preview-container {
+    margin-top: 25px;
+}
+
+.media-wrapper {
+    margin: 15px 0;
+    padding: 12px;
+    border-radius: 12px;
+    background: rgba(255,255,255,0.05);
+    animation: fadeIn 0.5s ease;
+}
+
+body:not(.night-mode) .media-wrapper {
+    background: white;
+}
+
+.media-wrapper img,
+.media-wrapper video {
+    width: 100%;
+    border-radius: 10px;
+}
+
+/* DOWNLOAD BTN */
+.media-wrapper button {
+    margin-top: 10px;
+    padding: 8px 14px;
+    border-radius: 6px;
+    border: none;
+    background: #22c55e;
+    color: white;
+    cursor: pointer;
+    transition: 0.2s;
+}
+
+.media-wrapper button:hover {
+    transform: scale(1.05);
+}
+
+/* BACK BUTTON */
+#back-btn {
+    margin-top: 15px;
+    padding: 10px 20px;
+    border-radius: 8px;
+    background: #64748b;
+    border: none;
+    color: white;
+}
+
+/* =========================
+   LOADER (SPINNER)
+========================= */
+.loader {
+    width: 50px;
+    height: 50px;
+    border: 4px solid rgba(255,255,255,0.1);
+    border-top: 4px solid #38bdf8;
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+    margin: 30px auto;
+}
+
+@keyframes spin {
+    to { transform: rotate(360deg); }
+}
+
+/* =========================
+   BLOG SECTION
+========================= */
+#blog-section {
+    margin-top: 40px;
+    line-height: 1.7;
+}
+
+#blog-section h2 {
+    margin-bottom: 10px;
+}
+
+/* =========================
+   ADS (CLS SAFE)
+========================= */
+.ad-container {
+    min-height: 120px;
+    margin: 30px 0;
+    padding: 15px;
+    text-align: center;
+    border-radius: 10px;
+    background: rgba(255,255,255,0.05);
+}
+
+body:not(.night-mode) .ad-container {
+    background: #f1f5f9;
+}
+
+.ad-banner {
+    text-align: center;
+    margin: 10px 0;
+    font-size: 14px;
+}
+
+/* =========================
+   FOOTER
+========================= */
 footer {
-    background-color: #ffff;
-    padding: 20px 10px;
-    
-    color: inherit;
+    margin-top: 40px;
+    padding: 30px 8%;
+    background: #020617;
 }
 
-body.night-mode footer {
-    background-color: #444;
-    color: #fff;
+body:not(.night-mode) footer {
+    background: #e2e8f0;
 }
 
 .footer-container {
     display: flex;
-    flex-wrap: wrap;
     justify-content: space-between;
-    margin-bottom: 20px;
+    flex-wrap: wrap;
 }
 
 .footer-section h4 {
     margin-bottom: 10px;
-    font-size: 1rem;
 }
 
-.footer-section ul li {
-    margin: 5px 0;
+.footer-section ul {
+    list-style: none;
 }
+
+.footer-section li {
+    margin-bottom: 6px;
+}
+
+.footer-section a {
+    text-decoration: none;
+    color: #94a3b8;
+}
+
+.footer-section a:hover {
+    color: #38bdf8;
+}
+
+/* FOOTER BOTTOM */
 .footer-bottom {
-      width: 100%;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-        font-size: 1rem;
-        padding-top: 15px;
-        margin: 10px 0;
-    }
-footer p{
-  text-align: center;
-  font-size: 15px;
+    text-align: center;
+    margin-top: 20px;
 }
-footer a{
-  text-align: center;
-  font-size: 15px;
-}
+
+/* =========================
+   SOCIAL SHARE
+========================= */
 .share-text {
-    font-size: 18px;
-    font-weight: bold;
-    margin-bottom: 10px;
-}
-/* General Container for Ads */
-.ad-container {
-  width: 100%;                /* Ensure ad container takes full width */
-  margin: 20px 0;             /* Add space above and below the ad */
-  padding: 10px;              /* Add padding around the ad for spacing */
-  text-align: center;         /* Center the ad within its container */
-  background-color: #f5f5f5;  /* Light background to distinguish ad from content */
-  border: 1px solid #e0e0e0;  /* Light border around the ad */
-  border-radius: 8px;         /* Optional: rounded corners for a cleaner look */
+    text-align: center;
+    margin-top: 20px;
 }
 
-.ad-container iframe,
-.ad-container ins {
-  display: block;             /* Ensure ad elements take block-level display */
-  max-width: 100%;            /* Ensure ads are responsive and fit container */
-  height: auto;               /* Allow ads to scale proportionally */
-  margin: 0 auto;             /* Center the ad horizontally */
-}
-
-.ad-container p {
-  font-size: 14px;            /* Smaller text for ad context */
-  color: #333;                /* Darker text for better readability */
-  margin-top: 10px;           /* Add some space between ad and description */
-}
-
-@media (max-width: 768px) {
-  /* Mobile-friendly Ads */
-  .ad-container {
-    margin: 10px 0;           /* Less margin on mobile */
-    padding: 5px;             /* Less padding for a compact look */
-  }
-
-  .ad-container p {
-    font-size: 12px;          /* Slightly smaller text on mobile */
-  }
-}
-
-/* Styling for Close Button in case you use pop-up/overlays */
-.ad-close-btn {
-  position: absolute;
-  top: 10px;
-  right: 10px;
-  background-color: rgba(0, 0, 0, 0.6);
-  color: white;
-  border: none;
-  padding: 5px 10px;
-  font-size: 14px;
-  cursor: pointer;
-  border-radius: 50%;
-  transition: background-color 0.3s;
-}
-
-.ad-close-btn:hover {
-  background-color: rgba(0, 0, 0, 0.8);
-}
-
-/* Styling for AdBanner (e.g., a sticky ad at the bottom of the page) */
-.ad-banner {
-  position: fixed;
-  bottom: 0;
-  left: 0;
-  width: 100%;
-  background-color: #333;
-  color: white;
-  text-align: center;
-  padding: 10px 0;
-  z-index: 9999;
-}
-
-.ad-banner a {
-  color: #ff9800;
-  text-decoration: none;
-  font-weight: bold;
-  margin-left: 10px;
-}
-
-.ad-banner a:hover {
-  text-decoration: underline;
-}
-/* Social Buttons */
 .social-buttons {
     display: flex;
-    gap: 10px;
     justify-content: center;
-    gap: 15px;
-    flex-wrap: wrap;  /* Makes it responsive */
+    gap: 12px;
+    margin-top: 10px;
 }
 
-/* Button Styling */
-.btn {
-    display: inline-block;
-    padding: 10px 15px;
-    font-size: 14px;
-    font-weight: bold;
-    color: #fff;
-    text-decoration: none;
-    border-radius: 5px;
-    transition: background 0.3s ease;
-    text-align: center;
+.social-buttons .btn {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    transition: 0.3s;
 }
 
-/* Facebook */
-.btn.facebook {
-    color: #8b9dc3;
-}
-.btn.facebook:hover {
-    background-color: #2d4373;
+.social-buttons .btn:hover {
+    transform: translateY(-4px) scale(1.1);
 }
 
-/* Twitter */
-.btn.twitter {
-    color: #87CEEB;
-}
-.btn.twitter:hover {
-    background-color: #0d8bf0;
+.facebook { background:#1877f2; }
+.twitter { background:#1da1f2; }
+.linkedin { background:#0077b5; }
+.whatsapp { background:#25d366; }
+.telegram { background:#0088cc; }
+
+/* =========================
+   ANIMATION
+========================= */
+@keyframes fadeIn {
+    from {opacity:0; transform: translateY(10px);}
+    to {opacity:1; transform: translateY(0);}
 }
 
-/* LinkedIn */
-.btn.linkedin {
-    color: #00a0dc;
-}
-.btn.linkedin:hover {
-    background-color: #005983;
-}
+/* =========================
+   RESPONSIVE
+========================= */
+@media(max-width:768px) {
+    nav {
+        flex-direction: column;
+        gap: 10px;
+    }
 
-/* WhatsApp */
-.btn.whatsapp {
-    color: #50C878;
-}
-.btn.whatsapp:hover {
-    background-color: #1ba958;
-}
-
-/* Telegram */
-.btn.telegram {
-    color: #68C4E8;
-}
-.btn.telegram:hover {
-    background-color: #0077aa;
-}
-body.night-mode .btn.facebook { color: #8b9dc3; }
-body.night-mode .btn.twitter { color: #87CEEB; }
-body.night-mode .btn.linkedin { color: #00a0dc; }
-body.night-mode .btn.whatsapp { color: #50C878; }
-body.night-mode .btn.telegram { color: #68C4E8; }
-
-/* Responsive Design */
-@media (max-width: 600px) {
-    .container {
-        width: 100%;
-        padding: 10px;
+    .footer-container {
+        flex-direction: column;
+        gap: 20px;
     }
 }

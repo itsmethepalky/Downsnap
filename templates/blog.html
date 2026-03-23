@@ -1,117 +1,242 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Blog Posts</title>
-    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Blog Posts - Downsnap</title>
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+<style>
+/* General Styles */
+body {
+    font-family: 'Poppins', sans-serif;
+    margin: 0;
+    padding: 0;
+    background: #0f172a;
+    color: #fff;
+}
+
+/* Container */
+.container {
+    max-width: 1000px;
+    margin: 60px auto;
+    padding: 0 20px;
+}
+
+/* Header */
+.container h1 {
+    text-align: center;
+    font-size: 42px;
+    margin-bottom: 40px;
+    background: linear-gradient(90deg,#38bdf8,#818cf8);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+/* Blog Post Cards */
+.blog-post {
+    background: rgba(255,255,255,0.05);
+    border-radius: 12px;
+    padding: 20px;
+    margin-bottom: 25px;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+.blog-post:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 20px rgba(0,0,0,0.4);
+}
+.blog-post h2 {
+    margin-top: 0;
+    font-size: 28px;
+    color: #38bdf8;
+}
+.blog-post p {
+    font-size: 16px;
+    color: #cbd5f5;
+}
+.blog-post img {
+    max-width: 100%;
+    border-radius: 10px;
+    margin: 15px 0;
+}
+
+/* Read More Button */
+.read-more {
+    display: inline-block;
+    margin-top: 10px;
+    padding: 10px 20px;
+    background: #38bdf8;
+    color: #fff;
+    border-radius: 8px;
+    text-decoration: none;
+    transition: background 0.3s ease;
+}
+.read-more:hover {
+    background: #0ea5e9;
+}
+
+/* Ads Container */
+.ad-container {
+    background: rgba(255,255,255,0.05);
+    border-radius: 10px;
+    padding: 20px;
+    text-align: center;
+    margin: 30px 0;
+}
+
+/* Sticky Ad Banner */
+.ad-banner {
+    position: fixed;
+    bottom: 10px;
+    right: 10px;
+    background: #38bdf8;
+    color: #0f172a;
+    padding: 12px 20px;
+    border-radius: 8px;
+    font-weight: bold;
+    z-index: 1000;
+}
+.ad-banner a {
+    color: #0f172a;
+    text-decoration: underline;
+}
+
+/* Footer */
+footer {
+    margin-top: 60px;
+    padding: 40px 20px 20px 20px;
+    background: #1e293b;
+    color: #94a3b8;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    gap: 20px;
+}
+.footer-section h4 {
+    color: #38bdf8;
+    margin-bottom: 12px;
+}
+.footer-section ul {
+    list-style: none;
+    padding: 0;
+}
+.footer-section ul li {
+    margin-bottom: 8px;
+}
+.footer-section ul li a {
+    color: #cbd5f5;
+    text-decoration: none;
+}
+.footer-section ul li a:hover {
+    color: #38bdf8;
+}
+.footer-bottom {
+    width: 100%;
+    text-align: center;
+    margin-top: 30px;
+    border-top: 1px solid #64748b;
+    padding-top: 15px;
+    font-size: 14px;
+}
+
+/* Social Share Buttons */
+.social-buttons {
+    margin-top: 15px;
+    display: flex;
+    gap: 10px;
+}
+.social-buttons a {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 40px; height: 40px;
+    border-radius: 50%;
+    background: #38bdf8;
+    color: #0f172a;
+    text-decoration: none;
+    font-size: 18px;
+    transition: transform 0.3s ease;
+}
+.social-buttons a:hover {
+    transform: scale(1.2);
+}
+
+/* Share Text */
+.share-text {
+    margin-top: 20px;
+    font-weight: bold;
+}
+</style>
 </head>
 <body>
-    <div class="container">
-        <h1>Blog Posts</h1>
-        {% for blog in blogs %}
-        <div class="blog-post">
-            <h2>{{ blog.title }}</h2>
-            <p>{{ blog.content[:100] }}...</p>
-            {% if blog.image_url %}
-            <img src="{{ blog.image_url }}" alt="Blog Image">
-            
-            {% endif %}
-            <!-- Link to the full blog post -->
-            <a href="{{ url_for('view_blog', blog_id=blog.id) }}" class="read-more">Read More</a>
+
+<div class="container">
+    <h1>Blog Posts</h1>
+
+    {% for blog in blogs %}
+    <div class="blog-post">
+        <h2>{{ blog.title }}</h2>
+        <p>{{ blog.content[:100] }}...</p>
+        {% if blog.image_url %}
+        <img src="{{ blog.image_url }}" alt="Blog Image">
+        {% endif %}
+
+        <a href="{{ url_for('view_blog', blog_id=blog.id) }}" class="read-more">Read More</a>
+
+        <!-- Social Share -->
+        <p class="share-text">Share this content:</p>
+        <div class="social-buttons">
+            <a href="https://www.facebook.com/sharer/sharer.php?u={{ request.host_url }}blog/{{ blog.id }}" target="_blank" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
+            <a href="https://twitter.com/intent/tweet?url={{ request.host_url }}blog/{{ blog.id }}&text={{ blog.title }}" target="_blank" aria-label="Twitter"><i class="fab fa-twitter"></i></a>
+            <a href="https://www.linkedin.com/sharing/share-offsite/?url={{ request.host_url }}blog/{{ blog.id }}" target="_blank" aria-label="LinkedIn"><i class="fab fa-linkedin-in"></i></a>
+            <a href="https://api.whatsapp.com/send?text={{ blog.title }} {{ request.host_url }}blog/{{ blog.id }}" target="_blank" aria-label="WhatsApp"><i class="fab fa-whatsapp"></i></a>
+            <a href="https://t.me/share/url?url={{ request.host_url }}blog/{{ blog.id }}&text={{ blog.title }}" target="_blank" aria-label="Telegram"><i class="fab fa-telegram-plane"></i></a>
         </div>
-        
-  </body>
-  <div class="ad-container">
-    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-    <ins class="adsbygoogle"
-         style="display:block"
-         data-ad-client="ca-pub-XXXXXX"
-         data-ad-slot="XXXXXX"
-         data-ad-format="auto"></ins>
-    <script>
-         (adsbygoogle = window.adsbygoogle || []).push({});
-    </script>
-    <p>Advertisement</p>
+    </div>
+    {% endfor %}
+
+    <!-- Ad Container -->
+    <div class="ad-container">
+        <p>Advertisement</p>
+        <ins class="adsbygoogle"
+             style="display:block"
+             data-ad-client="ca-pub-XXXXXX"
+             data-ad-slot="XXXXXX"
+             data-ad-format="auto"></ins>
+        <script>
+             (adsbygoogle = window.adsbygoogle || []).push({});
+        </script>
+    </div>
 </div>
 
-<!-- For Sticky Ad Banner -->
+<!-- Sticky Banner -->
 <div class="ad-banner">
     <p>Check out our <a href="#">special offer!</a></p>
 </div>
-        <!-- Footer -->
-        <footer>
-            <div class="footer-container">
-                
-      
-                <div class="footer-section">
-                    <h4>Support</h4>
-                    <ul>
-                        <li><a href="{{ url_for('about') }}">About Us</a></li>
-                        <li><a href="{{ url_for('contact') }}">Contact</a></li>
-                        <li><a href="{{ url_for('blog') }}">Blog</a></li>
-                    </ul>
-                </div>
-                <div class="footer-section">
-                    <h4>Legal</h4>
-                    <ul>
-                        <li><a href="{{ url_for('terms') }}">Terms of Service</a></li>
-                        <li><a href="{{ url_for('privacy') }}">Privacy Policy</a></li>
-                         <li><a href="{{ url_for('sitemap') }}">Sitemap</a></li>
-                    </ul>
-                
-               </div>
-              
-               
-               <div class="footer-bottom"
-            <p>__________________________________________</p>
-            
-                <p>We are not affiliated with Instagram or Meta.</p>
-                <p>© 2025 <a href="/">Downsnap</a>  All rights reserved.</p>
-            </div>
-  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
 
-<p class="share-text">Share this content:</p>
-<div class="social-buttons">
-    <!-- Facebook -->
-    <a href="https://www.facebook.com/sharer/sharer.php?u={{ url }}" 
-       class="btn facebook" target="_blank" rel="noopener noreferrer" aria-label="Share on Facebook">
-       <i class="fab fa-facebook-f"></i>
-    </a>
+<!-- Footer -->
+<footer>
+    <div class="footer-section">
+        <h4>Support</h4>
+        <ul>
+            <li><a href="{{ url_for('about') }}">About Us</a></li>
+            <li><a href="{{ url_for('contact') }}">Contact</a></li>
+            <li><a href="{{ url_for('blog') }}">Blog</a></li>
+        </ul>
+    </div>
+    <div class="footer-section">
+        <h4>Legal</h4>
+        <ul>
+            <li><a href="{{ url_for('terms') }}">Terms of Service</a></li>
+            <li><a href="{{ url_for('privacy') }}">Privacy Policy</a></li>
+            <li><a href="{{ url_for('sitemap') }}">Sitemap</a></li>
+        </ul>
+    </div>
+    <div class="footer-bottom">
+        <p>__________________________________________</p>
+        <p>We are not affiliated with Instagram or Meta.</p>
+        <p>© 2026 <a href="/">Downsnap</a> All rights reserved.</p>
+    </div>
+</footer>
 
-    <!-- Twitter -->
-    <a href="https://twitter.com/intent/tweet?url={{ url }}&text={{ title }}" 
-       class="btn twitter" target="_blank" rel="noopener noreferrer" aria-label="Share on Twitter">
-       <i class="fab fa-twitter"></i>
-    </a>
-
-    <!-- LinkedIn -->
-    <a href="https://www.linkedin.com/sharing/share-offsite/?url={{ url }}" 
-       class="btn linkedin" target="_blank" rel="noopener noreferrer" aria-label="Share on LinkedIn">
-       <i class="fab fa-linkedin-in"></i>
-    </a>
-
-    <!-- WhatsApp -->
-    <a href="https://api.whatsapp.com/send?text={{ title }} {{ url }}" 
-       class="btn whatsapp" target="_blank" rel="noopener noreferrer" aria-label="Share on WhatsApp">
-       <i class="fab fa-whatsapp"></i>
-    </a>
-
-    <!-- Telegram -->
-    <a href="https://t.me/share/url?url={{ url }}&text={{ title }}" 
-       class="btn telegram" target="_blank" rel="noopener noreferrer" aria-label="Share on Telegram">
-       <i class="fab fa-telegram-plane"></i>
-    </a>
-</div>
-        </footer>
-</html>
-          <!--
-             <div class="action-buttons">
-                 <a href="{{ url_for('edit_blog', id=blog.id) }}">Edit</a>
-                <form action="{{ url_for('delete_blog', id=blog.id) }}" method="post">
-                    <button type="submit">Delete</button>
-                </form>
-        {% endfor %}
-    </div>--!>
 </body>
 </html>

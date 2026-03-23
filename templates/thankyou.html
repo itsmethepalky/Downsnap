@@ -1,54 +1,73 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Thank You</title>
-  <style>
-    body {
-      font-family: Arial, sans-serif;
-      margin: 0;
-      padding: 0;
-      background-color: #f9f9f9;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      height: 100vh;
-      text-align: center;
-    }
-    .container {
-      max-width: 600px;
-      padding: 20px;
-      background: #ffffff;
-      border-radius: 8px;
-      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-    }
-    h1 {
-      color: #007bff;
-    }
-    p {
-      color: #555;
-      margin: 15px 0;
-    }
-    a {
-      display: inline-block;
-      margin-top: 20px;
-      padding: 10px 15px;
-      background-color: #007bff;
-      color: #fff;
-      text-decoration: none;
-      border-radius: 5px;
-    }
-    a:hover {
-      background-color: #0056b3;
-    }
-  </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Thank You - Downsnap</title>
+<style>
+/* General */
+body {
+    font-family: 'Poppins', sans-serif;
+    margin: 0;
+    padding: 0;
+    background: #0f172a;
+    color: #fff;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+
+/* Container */
+.container {
+    max-width: 600px;
+    width: 90%;
+    padding: 40px;
+    background: rgba(255,255,255,0.05);
+    border-radius: 12px;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.5);
+    text-align: center;
+}
+
+/* Heading */
+h1 {
+    font-size: 36px;
+    margin-bottom: 20px;
+    background: linear-gradient(90deg, #38bdf8, #818cf8);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+/* Message */
+p {
+    font-size: 18px;
+    color: #cbd5f5;
+    margin-bottom: 30px;
+}
+
+/* Button */
+a.button {
+    display: inline-block;
+    padding: 12px 25px;
+    background: #38bdf8;
+    color: #fff;
+    text-decoration: none;
+    font-weight: 600;
+    border-radius: 8px;
+    transition: 0.3s;
+}
+
+a.button:hover {
+    background: #0ea5e9;
+    transform: translateY(-2px);
+}
+</style>
 </head>
 <body>
-  <div class="container">
+<div class="container">
     <h1>Thank You!</h1>
     <p>Your message has been successfully sent. We will get back to you shortly.</p>
-    <a href="{{ url_for('thankyou') }}">Go Back to Contact Us</a>
-  </div>
+    <a href="{{ url_for('contact') }}" class="button">Back to Contact Page</a>
+</div>
 </body>
 </html>

@@ -1,85 +1,266 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="robots" content="index, nofollow">
-    <title>About Us - Downsnap</title>
-    
-    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Roboto:wght@300;400&display=swap" rel="stylesheet">
-    <style>
-        body {
-            margin: 0;
-            padding: 0;
-            font-family: 'Roboto', sans-serif;
-            background-color: #f4f4f9;
-            color: #333;
-        }
-        .container {
-            max-width: 800px;
-            margin: 50px auto;
-            padding: 30px;
-            background: #fff;
-            border: 1px solid #e0e0e0;
-            border-radius: 10px;
-            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-        }
-        h1 {
-            font-family: 'Playfair Display', serif;
-            font-size: 36px;
-            color: #2c3e50;
-            margin-bottom: 20px;
-            text-align: center;
-        }
-        h2 {
-            font-family: 'Playfair Display', serif;
-            font-size: 24px;
-            color: #34495e;
-            margin-bottom: 15px;
-            margin-top: 30px;
-        }
-        p {
-            font-size: 16px;
-            line-height: 1.8;
-            margin-bottom: 15px;
-        }
-        strong {
-            font-weight: bold;
-            color: #34495e;
-        }
-        footer {
-            text-align: center;
-            margin-top: 30px;
-            font-size: 14px;
-            color: #7f8c8d;
-        }
-    </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>About Downsnap</title>
+
+<style>
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Poppins', sans-serif;
+    background: #0f172a;
+    color: #fff;
+}
+
+/* CONTAINER */
+.container {
+    width: 90%;
+    max-width: 1200px;
+    margin: auto;
+}
+
+/* NAV */
+nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px 0;
+}
+
+.logo {
+    font-size: 22px;
+    font-weight: 600;
+    color: #38bdf8;
+}
+
+nav ul {
+    display: flex;
+    list-style: none;
+    gap: 20px;
+}
+
+nav a {
+    text-decoration: none;
+    color: #cbd5f5;
+    transition: 0.3s;
+}
+
+nav a:hover {
+    color: #38bdf8;
+}
+
+/* HERO */
+.hero {
+    text-align: center;
+    padding: 80px 20px;
+}
+
+.hero h1 {
+    font-size: 48px;
+    background: linear-gradient(90deg,#38bdf8,#818cf8);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.hero p {
+    max-width: 650px;
+    margin: 20px auto;
+    color: #94a3b8;
+}
+
+/* GRID */
+.grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 25px;
+    margin: 60px 0;
+}
+
+/* CARD */
+.card {
+    background: rgba(255,255,255,0.05);
+    padding: 25px;
+    border-radius: 16px;
+    backdrop-filter: blur(10px);
+    transition: 0.3s;
+}
+
+.card:hover {
+    transform: translateY(-8px);
+    background: rgba(255,255,255,0.08);
+}
+
+.card h3 {
+    margin-bottom: 10px;
+}
+
+/* CTA */
+.cta {
+    text-align: center;
+    padding: 60px 20px;
+    background: linear-gradient(90deg,#38bdf8,#818cf8);
+    border-radius: 20px;
+    margin: 80px 0;
+}
+
+.cta h2 {
+    margin-bottom: 15px;
+}
+
+.cta p {
+    margin-bottom: 20px;
+}
+
+.cta button {
+    padding: 12px 25px;
+    border: none;
+    border-radius: 8px;
+    background: #0f172a;
+    color: #fff;
+    cursor: pointer;
+}
+
+/* CONTACT */
+.contact {
+    text-align: center;
+    margin-top: 40px;
+    color: #94a3b8;
+}
+
+/* FOOTER */
+footer {
+    text-align: center;
+    padding: 30px 0;
+    color: #64748b;
+}
+
+/* ANIMATION */
+.fade {
+    opacity: 0;
+    transform: translateY(20px);
+    transition: 0.6s ease;
+}
+
+.fade.show {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+@media(max-width:768px){
+    .hero h1 {
+        font-size: 32px;
+    }
+}
+</style>
 </head>
+
 <body>
-    <div class="container">
-        <h1>About Us</h1>
-        <p>Welcome to Downsnap, a fast and efficient Instagram downloader that allows users to easily download publicly available content from Instagram. Our mission is to provide a simple, user-friendly tool for downloading videos, photos, and stories from Instagram while ensuring a smooth, secure experience.</p>
 
-        <h2>Our Vision</h2>
-        <p>At Downsnap, we believe in making digital content accessible to everyone. Our goal is to offer a reliable platform where users can download content legally, with full respect for privacy and copyright laws. We aim to continually enhance our service to meet the evolving needs of our users while maintaining the highest standards of security.</p>
+<div class="container">
 
-        <h2>Why Choose Downsnap?</h2>
-        <ul>
-            <li><strong>Simple to Use:</strong> Our platform is designed to be intuitive and user-friendly, allowing anyone to quickly and easily download Instagram content.</li>
-            <li><strong>Fast and Reliable:</strong> Downsnap offers fast download speeds with minimal interruptions, ensuring that your experience is seamless.</li>
-            <li><strong>Privacy Focused:</strong> We respect your privacy. Our tool does not collect personal information unless you voluntarily provide it.</li>
-            <li><strong>Free to Use:</strong> Downsnap is completely free for all users. You can download Instagram content without any hidden charges or subscriptions.</li>
-        </ul>
+<!-- NAV -->
+<nav>
+    <div class="logo">Downsnap</div>
+    <ul>
+        <li><a href="/">Home</a></li>
+        <li><a href="#">Downloader</a></li>
+        <li><a href="#">About</a></li>
+    </ul>
+</nav>
 
-        <h2>Our Team</h2>
-        <p>Our team consists of passionate developers and digital enthusiasts who are dedicated to creating innovative solutions. We continuously work to improve the performance and security of Downsnap, ensuring the best experience for our users.</p>
+<!-- HERO -->
+<section class="hero fade">
+    <h1>About Downsnap</h1>
+    <p>
+        Downsnap is a fast, secure, and user-friendly Instagram downloader that allows users to save videos, reels, and images instantly without watermark or hassle.
+    </p>
+</section>
 
-        <h2>Get in Touch</h2>
-        <p>If you have any questions or feedback, feel free to contact us at <a href="mailto:anamkhadka1@gmail.com">anamkhadka1@gmail.com</a>. We’d love to hear from you!</p>
-
-        <footer>
-            &copy; 2025 Downsnap. All Rights Reserved.
-        </footer>
+<!-- FEATURES -->
+<section class="grid">
+    <div class="card fade">
+        <h3>⚡ Fast Downloads</h3>
+        <p>Download Instagram content instantly with high-speed processing.</p>
     </div>
+    <div class="card fade">
+        <h3>📱 Easy to Use</h3>
+        <p>Just paste your Instagram link and get your file in seconds.</p>
+    </div>
+    <div class="card fade">
+        <h3>🔒 Secure & Private</h3>
+        <p>No login required. Your data stays completely private.</p>
+    </div>
+</section>
+
+<!-- ABOUT AUTHOR -->
+<section class="grid">
+    <div class="card fade">
+        <h3>👨‍💻 About the Creator</h3>
+        <p>
+            Downsnap was created by <strong>The Palky</strong>, focused on building fast, useful and user-friendly web tools.
+        </p>
+    </div>
+
+    <div class="card fade">
+        <h3>🎯 Our Mission</h3>
+        <p>
+            Our mission is to provide free, simple, and powerful tools that solve real user problems with speed and reliability.
+        </p>
+    </div>
+
+    <div class="card fade">
+        <h3>🌍 Our Vision</h3>
+        <p>
+            To become a leading platform for online tools that are accessible to everyone, everywhere.
+        </p>
+    </div>
+</section>
+
+<!-- CTA -->
+<section class="cta fade">
+    <h2>Start Downloading Now</h2>
+    <p>Experience the fastest Instagram downloader today.</p>
+    <button onclick="start()">Go to Downloader</button>
+</section>
+
+<!-- CONTACT -->
+<div class="contact fade">
+    <p><strong>Email:</strong> thepalky@gmail.com</p>
+    <p><strong>Phone:</strong> +9779702454436</p>
+</div>
+
+<!-- FOOTER -->
+<footer>
+    © 2026 Downsnap. All rights reserved.
+</footer>
+
+</div>
+
+<script>
+// ANIMATION
+const faders = document.querySelectorAll('.fade');
+
+const observer = new IntersectionObserver(entries => {
+    entries.forEach(entry => {
+        if(entry.isIntersecting){
+            entry.target.classList.add('show');
+        }
+    });
+});
+
+faders.forEach(el => observer.observe(el));
+
+// BUTTON ACTION
+function start(){
+    window.location.href = "/";
+}
+</script>
+
 </body>
 </html>

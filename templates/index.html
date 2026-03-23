@@ -52,7 +52,7 @@
   }
 }
 </script>
-    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
     <meta name="google-site-verification" content="7yb50L2gU2gd7gbXpwoFL-uYKriej9Qm9ZW_gjujx7U" />
     <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-7422771049190232"
      crossorigin="anonymous"></script>
@@ -119,7 +119,10 @@ function toggleMode() {
                     <input type="text" id="instagram-url" placeholder="Enter Instagram URL" required>
                     <button type="button" id="paste-btn"><i class="fas fa-paste"></i></button>
                 </div>
-                <button type="submit">Fetch Media</button>
+                <button type="submit">
+    <svg width="18" height="18" viewBox="0 0 24 24" fill="white">
+        <path d="M12 16l4-5h-3V4h-2v7H8l4 5zm-7 2h14v2H5z"/>
+                    </svg>Download Now</button>
             </form>
         </div>
 
@@ -132,11 +135,11 @@ function toggleMode() {
 
         <!-- Blog Section -->
         <div class="ad-container">
-    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-7422771049190232" crossorigin="anonymous"></script>
     <ins class="adsbygoogle"
          style="display:block"
-         data-ad-client="ca-pub-XXXXXX"
-         data-ad-slot="XXXXXX"
+         data-ad-client="ca-pub-7422771049190232"
+         data-ad-slot="7750359121"
          data-ad-format="auto"></ins>
     <script>
          (adsbygoogle = window.adsbygoogle || []).push({});
@@ -164,8 +167,8 @@ function toggleMode() {
     <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
     <ins class="adsbygoogle"
          style="display:block"
-         data-ad-client="ca-pub-XXXXXX"
-         data-ad-slot="XXXXXX"
+         data-ad-client="ca-pub-7422771049190232"
+         data-ad-slot="7750359121"
          data-ad-format="auto"></ins>
     <script>
          (adsbygoogle = window.adsbygoogle || []).push({});
@@ -308,6 +311,49 @@ function toggleMode() {
             document.getElementById('input-section').style.display = 'block';
             document.getElementById('preview-container').style.display = 'none';
         });
+        document.getElementById('url-form').addEventListener('submit', function(event) {
+    event.preventDefault();
+
+    let container = document.getElementById('media-container');
+    container.innerHTML = '<div class="loader"></div>'; // spinner
+
+    let url = document.getElementById('instagram-url').value;
+
+    fetch('/download', {
+        method: 'POST',
+        headers: {'Content-Type': 'application/json'},
+        body: JSON.stringify({url: url})
+    })
+    .then(res => res.json())
+    .then(data => {
+        container.innerHTML = "";
+
+        data.media.forEach(item => {
+            let wrapper = document.createElement('div');
+            wrapper.classList.add('media-wrapper');
+
+            let media;
+            if (item.type === 'video') {
+                media = document.createElement('video');
+                media.controls = true;
+            } else {
+                media = document.createElement('img');
+            }
+
+            media.src = '/download-file?url=' + encodeURIComponent(item.url);
+
+            let btn = document.createElement('button');
+            btn.innerText = "Download";
+            btn.onclick = () => {
+                window.location.href = media.src;
+            };
+
+            wrapper.appendChild(media);
+            wrapper.appendChild(btn);
+            container.appendChild(wrapper);
+        });
+    });
+});
     </script>
 </body>
 </html>

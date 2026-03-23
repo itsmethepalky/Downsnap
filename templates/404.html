@@ -1,48 +1,71 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>404 - Page Not Found</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            text-align: center;
-            background-color: #f4f4f4;
-            color: #333;
-            margin: 0;
-            padding: 0;
-        }
-        .container {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-            flex-direction: column;
-        }
-        h1 {
-            font-size: 6rem;
-            margin: 0;
-        }
-        p {
-            font-size: 1.5rem;
-            margin: 0.5rem 0;
-        }
-        a {
-            color: #007bff;
-            text-decoration: none;
-            font-size: 1.2rem;
-        }
-        a:hover {
-            text-decoration: underline;
-        }
-    </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>404 - Page Not Found | Downsnap</title>
+<style>
+/* General */
+body {
+    font-family: 'Poppins', sans-serif;
+    margin: 0;
+    padding: 0;
+    background: #0f172a;
+    color: #fff;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+
+/* Container */
+.container {
+    text-align: center;
+    background: rgba(255,255,255,0.05);
+    padding: 50px;
+    border-radius: 15px;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.5);
+}
+
+/* 404 Heading */
+h1 {
+    font-size: 8rem;
+    margin: 0;
+    background: linear-gradient(90deg, #38bdf8, #818cf8);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+/* Message */
+p {
+    font-size: 1.5rem;
+    margin: 20px 0;
+    color: #cbd5f5;
+}
+
+/* Home Button */
+a.button {
+    display: inline-block;
+    padding: 12px 25px;
+    background: #38bdf8;
+    color: #fff;
+    text-decoration: none;
+    font-weight: 600;
+    border-radius: 8px;
+    transition: 0.3s;
+}
+
+a.button:hover {
+    background: #0ea5e9;
+    transform: translateY(-2px);
+}
+</style>
 </head>
 <body>
-    <div class="container">
-        <h1>404</h1>
-        <p>Oops! The page you are looking for doesn't exist.</p>
-        <a href="/">Go back to Home</a>
-    </div>
+<div class="container">
+    <h1>404</h1>
+    <p>Oops! The page you are looking for doesn't exist.</p>
+    <a href="/" class="button">Go back to Home</a>
+</div>
 </body>
 </html>

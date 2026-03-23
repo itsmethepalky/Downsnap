@@ -2,7 +2,7 @@ import os
 import instaloader
 import datetime
 import requests
-from flask import Flask, request, jsonify, render_template, send_file, abort, send_from_directory, redirect, url_for
+from flask import Flask, render_template_string, request, jsonify, render_template, send_file, abort, send_from_directory, redirect, url_for
 from io import BytesIO
 from flask_talisman import Talisman 
 from supabase import create_client, Client
@@ -11,13 +11,238 @@ import uuid
 
 app = Flask(__name__, static_url_path='/static')
 
+SITEMAP_HTML = """
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+<title>Sitemap - Downsnap</title>
 
+<style>
+/* ================= RESET ================= */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family:'Poppins',sans-serif;
+    background:#0f172a;
+    color:#fff;
+}
+
+/* ================= NAV ================= */
+nav {
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    padding:20px 8%;
+    background: rgba(255,255,255,0.05);
+    backdrop-filter: blur(10px);
+}
+
+.logo {
+    color:#38bdf8;
+    font-weight:bold;
+    font-size:22px;
+}
+
+nav ul {
+    display:flex;
+    list-style:none;
+    gap:20px;
+}
+
+nav a {
+    color:#cbd5f5;
+    text-decoration:none;
+    transition:0.3s;
+}
+
+nav a:hover {
+    color:#38bdf8;
+}
+
+/* ================= HEADER ================= */
+.header {
+    text-align:center;
+    margin-top:40px;
+}
+
+.header h1 {
+    font-size:38px;
+    background:linear-gradient(90deg,#38bdf8,#818cf8);
+    -webkit-background-clip:text;
+    -webkit-text-fill-color:transparent;
+}
+
+/* ================= CONTAINER ================= */
+.container {
+    max-width:800px;
+    margin:40px auto;
+    padding:0 15px;
+}
+
+/* ================= SECTION TITLE ================= */
+h2 {
+    margin:25px 0 10px;
+    color:#94a3b8;
+}
+
+/* ================= CARD FIX ================= */
+.item {
+    margin:12px 0;
+}
+
+/* 🔥 FULL CLICKABLE CARD */
+.item a.link {
+    display:block;
+    width:100%;
+    background:rgba(255,255,255,0.05);
+    padding:16px;
+    border-radius:12px;
+    color:#38bdf8;
+    text-decoration:none;
+    transition:0.3s ease;
+    box-shadow: 0 5px 20px rgba(0,0,0,0.2);
+}
+
+/* HOVER EFFECT */
+.item a.link:hover {
+    background:rgba(56,189,248,0.15);
+    transform:translateY(-3px);
+    box-shadow: 0 10px 30px rgba(0,0,0,0.4);
+}
+
+/* ================= FOOTER ================= */
+footer {
+    text-align:center;
+    margin:40px 0;
+    color:#64748b;
+}
+
+/* ================= RESPONSIVE ================= */
+@media(max-width:600px) {
+    nav {
+        flex-direction:column;
+        gap:10px;
+    }
+
+    .header h1 {
+        font-size:28px;
+    }
+}
+</style>
+
+</head>
+
+<body>
+
+<nav>
+<div class="logo">Downsnap</div>
+<ul>
+<li><a href="/">Home</a></li>
+<li><a href="/about">About</a></li>
+<li><a href="/contact">Contact</a></li>
+</ul>
+</nav>
+
+<div class="header">
+    <h1>Downsnap Sitemap</h1>
+</div>
+
+<div class="container">
+
+<h2>Main Pages</h2>
+{% for page in pages %}
+    <div class="item">
+        <a class="link" href="{{ request.host_url.rstrip('/') + url_for(page.endpoint) }}">
+            {{ page.name }}
+        </a>
+    </div>
+{% endfor %}
+
+<h2>Blogs</h2>
+{% for blog in blogs %}
+    <div class="item">
+        <a class="link" href="{{ request.host_url.rstrip('/') }}/blog/{{ blog['id'] }}">
+            {{ blog['title'] }}
+        </a>
+    </div>
+{% endfor %}
+
+</div>
+
+<footer>
+© 2026 Downsnap. All rights reserved.
+</footer>
+
+</body>
+</html>
+"""
+
+csp = {
+    "default-src": ["'self'"],
+
+    "script-src": [
+        "'self'",
+        "'unsafe-inline'",
+        "'unsafe-eval'",
+        "https://pagead2.googlesyndication.com",
+        "https://googleads.g.doubleclick.net",
+        "https://tpc.googlesyndication.com",
+        "https://*.adtrafficquality.google",
+        "https://www.googletagservices.com",
+        "https://www.google.com",
+        "https://www.gstatic.com",
+        "https://cdnjs.cloudflare.com"
+    ],
+
+    "style-src": [
+        "'self'",
+        "'unsafe-inline'",
+        "https://cdnjs.cloudflare.com"
+    ],
+
+    "img-src": [
+        "'self'",
+        "data:",
+        "https:"
+    ],
+
+    "connect-src": [
+        "'self'",
+        "https://*.supabase.co",
+        "https://pagead2.googlesyndication.com",
+        "https://googleads.g.doubleclick.net",
+        "https://*.adtrafficquality.google",
+        "https://csi.gstatic.com",
+        "https://www.google.com"
+    ],
+
+    "frame-src": [
+        "'self'",
+        "https://googleads.g.doubleclick.net",
+        "https://tpc.googlesyndication.com",
+        "https://*.adtrafficquality.google",
+        "https://www.google.com"
+    ],
+
+    "font-src": [
+        "'self'",
+        "https://cdnjs.cloudflare.com",
+        "https://fonts.gstatic.com"
+    ]
+}
+Talisman(app, content_security_policy=csp)
 
 # Apply Flask-Talisman with HSTS settings
 
 # Supabase Configuration
-SUPABASE_URL = "https://blhepmcjpzyrmoowqswk.supabase.co"
-SUPABASE_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImJsaGVwbWNqcHp5cm1vb3dxc3drIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDIyMTY4MjAsImV4cCI6MjA1Nzc5MjgyMH0.GIM_xTqed1R1Dmgpmp85fZr_cs2m2FDw4488nmKHCLs"
+SUPABASE_URL = "https://onhxdgkdgnrraaddhzkr.supabase.co"
+SUPABASE_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im9uaHhkZ2tkZ25ycmFhZGRoemtyIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzQxNjUzNDMsImV4cCI6MjA4OTc0MTM0M30.uKlYaR1OUkuVUOKuD9LgsBzyG6jVxrIr5WffzeXqht4"
 supabase: Client = create_client(SUPABASE_URL, SUPABASE_KEY)
 
 # Upload folder for images
@@ -181,11 +406,15 @@ def add_blog():
 # Route to view all blogs
 @app.route("/blog")
 def blog():
-    blogs = supabase.table("blogs").select("*").order("date_posted", desc=True).execute()
-    return render_template("blog.html", blogs=blogs.data)
+    try:
+        blogs = supabase.table("blogs").select("*").order("date_posted", desc=True).execute()
+        return render_template("blog.html", blogs=blogs.data)
+    except Exception as e:
+        print("Supabase Error:", e)
+        return render_template("blog.html", blogs=[])
 
 # Route to edit a blog post
-@app.route("/edit_blog/<int:id>", methods=["GET", "POST"])
+# Edit Blog Route
 def edit_blog(id):
     blog = supabase.table("blogs").select("*").eq("id", id).execute().data[0]
 
@@ -228,15 +457,12 @@ def delete_blog(id):
     supabase.table("blogs").delete().eq("id", id).execute()
     return redirect(url_for("blog"))
 
-@app.route('/blog/<int:blog_id>')
+@app.route('/blog/<int:blog_id>', endpoint='view_blog')
 def view_blog(blog_id):
     blog = supabase.table("blogs").select("*").eq("id", blog_id).execute().data[0]
-    
     if not blog:
         abort(404)
-
     return render_template('view_blog.html', blog=blog)
-
 # Additional static routes for SEO, contact, terms, etc.
 @app.route('/terms')
 def terms():
@@ -270,14 +496,58 @@ def robots():
 def serve_ads_txt():
     return send_from_directory(app.template_folder, 'ads.txt')
 
-@app.route('/sitemap.xml')
+@app.route('/sitemap.xml', methods=['GET'])
 def sitemap_xml():
-    return render_template('sitemap.xml'), 200, {'Content-Type': 'application/xml'}
-    
+    urls = []
+
+    # Static pages
+    static_pages = [
+        "home", "about", "contact", "terms", "privacy", "disclaimer"
+    ]
+    for endpoint in static_pages:
+        urls.append(request.host_url.rstrip('/') + url_for(endpoint))
+
+    # Blogs
+    try:
+        response = supabase.table("blogs").select("*").execute()
+        blogs_list = response.data if response.data else []
+        for blog in blogs_list:
+            urls.append(f"{request.host_url.rstrip('/')}/blog/{blog['id']}")
+    except Exception as e:
+        print("Supabase Error:", e)
+
+    # Generate XML
+    xml_sitemap = '<?xml version="1.0" encoding="UTF-8"?>\n'
+    xml_sitemap += '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n'
+    for url in urls:
+        xml_sitemap += f'  <url><loc>{url}</loc></url>\n'
+    xml_sitemap += '</urlset>'
+    return Response(xml_sitemap, mimetype='application/xml')
+
 @app.route('/sitemap')
 def sitemap():
-    return send_from_directory(app.root_path, 'sitemap.html')
+    # Static pages to include
+    pages_list = [
+        {"name": "Home", "endpoint": "home"},
+        {"name": "About", "endpoint": "about"},
+        {"name": "Contact", "endpoint": "contact"},
+        {"name": "Terms", "endpoint": "terms"},
+        {"name": "Privacy", "endpoint": "privacy"},
+        {"name": "Disclaimer", "endpoint": "disclaimer"},
+    ]
 
+    # Load blogs from Supabase
+    try:
+        response = supabase.table("blogs").select("*").order("date_posted", desc=True).execute()
+        blogs_list = response.data if response.data else []
+    except Exception as e:
+        print("Supabase Error:", e)
+        blogs_list = []
+
+    return render_template_string(SITEMAP_HTML, pages=pages_list, blogs=blogs_list, request=request)
+
+
+    
 @app.route('/favicon.ico')
 def favicon():
     return send_from_directory(app.root_path, 'favicon.ico')
