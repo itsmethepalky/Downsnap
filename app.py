@@ -6,6 +6,8 @@ from flask import Flask, Response, render_template_string, request, jsonify, ren
 from io import BytesIO
 from flask_talisman import Talisman 
 from supabase import create_client, Client
+import re
+import unicodedata
 from werkzeug.utils import secure_filename
 import uuid
 
@@ -249,6 +251,12 @@ supabase: Client = create_client(SUPABASE_URL, SUPABASE_KEY)
 app.config['UPLOAD_FOLDER'] = "static/uploads"
 app.config['ALLOWED_EXTENSIONS'] = {'png', 'jpg', 'jpeg', 'gif'}
 os.makedirs(app.config['UPLOAD_FOLDER'], exist_ok=True)
+
+def slugify(text):
+    text = unicodedata.normalize('NFKD', text).encode('ascii', 'ignore').decode('ascii')
+    text = re.sub(r'[^\w\s-]', '', text).strip().lower()
+    text = re.sub(r'[-\s]+', '-', text)
+    return text
 
 # Function to check allowed file types
 def allowed_file(filename):
