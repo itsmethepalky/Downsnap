@@ -66,8 +66,9 @@ nav h1 {
     color: #38bdf8;
 }
 
+/* LIGHT MODE NAV LINKS CONTRAST FIX */
 body:not(.night-mode) .nav-links a {
-    color: #334155;
+    color: #1e293b; /* darker gray for sufficient contrast */
 }
 
 /* =========================
@@ -223,19 +224,19 @@ body:not(.night-mode) .media-wrapper {
 
 .media-wrapper img,
 .media-wrapper video {
-      max-width: 100%;
+    max-width: 100%;
     height: auto;
     border-radius: 5px;
     margin-bottom: 10px;
 }
 
-/* DOWNLOAD BTN */
+/* DOWNLOAD BTN CONTRAST FIX */
 .media-wrapper button {
     margin-top: 10px;
     padding: 8px 14px;
     border-radius: 6px;
     border: none;
-    background: #22c55e;
+    background: #16a34a; /* slightly darker green for better contrast */
     color: white;
     cursor: pointer;
     transition: 0.2s;
@@ -337,9 +338,10 @@ body:not(.night-mode) footer {
     margin-bottom: 6px;
 }
 
+/* FOOTER LINKS CONTRAST FIX */
 .footer-section a {
     text-decoration: none;
-    color: #94a3b8;
+    color: #1e293b; /* dark gray for light mode */
 }
 
 .footer-section a:hover {
