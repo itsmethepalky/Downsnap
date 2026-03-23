@@ -382,9 +382,17 @@ window.addEventListener("load", function() {
 });
 
 // Optional: GDPR-compliant AdSense loader
-function loadAdsense() {
-    (adsbygoogle = window.adsbygoogle || []).push({});
-}
-</script>
+function loadAdsenseScript() {
+        const s = document.createElement('script');
+        s.src = "https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-7422771049190232";
+        s.async = true;
+        s.crossOrigin = "anonymous";
+        document.body.appendChild(s);
+    }
+    function loadAdsense() {
+        loadAdsenseScript();
+        (adsbygoogle = window.adsbygoogle || []).push({});
+    }
+   </script>
 </body>
 </html>
