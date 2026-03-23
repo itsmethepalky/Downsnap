@@ -169,7 +169,7 @@ footer {
 <h2>Blogs</h2>
 {% for blog in blogs %}
     <div class="item">
-        <a class="link" href="{{ request.host_url.rstrip('/') }}/blog/{{ blog['id'] }}">
+        <a class="link" href="{{ request.host_url.rstrip('/') }}/blog/{{ blog['slug'] }}">
             {{ blog['title'] }}
         </a>
     </div>
@@ -546,12 +546,13 @@ def sitemap_xml():
     for endpoint in static_pages:
         urls.append(request.host_url.rstrip('/') + url_for(endpoint))
 
-    # Blogs
+    # Blogs with slugs
     try:
-        response = supabase.table("blogs").select("*").execute()
+        response = supabase.table("blogs").select("slug").execute()
         blogs_list = response.data if response.data else []
         for blog in blogs_list:
-            urls.append(f"{request.host_url.rstrip('/')}/blog/{blog['id']}")
+            # Use the slug in the URL
+            urls.append(f"{request.host_url.rstrip('/')}/blog/{blog['slug']}")
     except Exception as e:
         print("Supabase Error:", e)
 
@@ -561,6 +562,7 @@ def sitemap_xml():
     for url in urls:
         xml_sitemap += f'  <url><loc>{url}</loc></url>\n'
     xml_sitemap += '</urlset>'
+    
     return Response(xml_sitemap, mimetype='application/xml')
 
 @app.route('/sitemap')
@@ -575,14 +577,15 @@ def sitemap():
         {"name": "Disclaimer", "endpoint": "disclaimer"},
     ]
 
-    # Load blogs from Supabase
+    # Load blogs from Supabase (only fetch slugs for efficiency)
     try:
-        response = supabase.table("blogs").select("*").order("date_posted", desc=True).execute()
+        response = supabase.table("blogs").select("slug").order("date_posted", desc=True).execute()
         blogs_list = response.data if response.data else []
     except Exception as e:
         print("Supabase Error:", e)
         blogs_list = []
 
+    # Pass pages and blogs list to the template
     return render_template_string(SITEMAP_HTML, pages=pages_list, blogs=blogs_list, request=request)
 
 
