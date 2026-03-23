@@ -371,32 +371,30 @@ def download_file():
 @app.route("/add_blog", methods=["GET", "POST"])
 def add_blog():
     if request.method == "POST":
-        title = request.form["title"]
-        content = request.form["content"]
+        title = request.form.get("title", "").strip()
+        content = request.form.get("content", "").strip()
         image_url = None
 
-        if "image" in request.files:
-            file = request.files["image"]
-            if file and allowed_file(file.filename):
-                filename = secure_filename(file.filename)
-                file_path = os.path.join(app.config['UPLOAD_FOLDER'], filename)
-                file.save(file_path)
+        # Handle uploaded image
+        file = request.files.get("image")
+        if file and allowed_file(file.filename):
+            filename = secure_filename(f"{uuid.uuid4()}_{file.filename}")
+            file_path = os.path.join(app.config['UPLOAD_FOLDER'], filename)
+            file.save(file_path)
 
-                # Upload image to Supabase Storage
-                with open(file_path, "rb") as f:
-                    response = supabase.storage.from_("blog-images").upload(filename, f)
-                
-                # Generate public URL for the image
-                image_url = f"{SUPABASE_URL}/storage/v1/object/public/blog-images/{filename}"
+            # Upload to Supabase storage
+            with open(file_path, "rb") as f:
+                supabase.storage.from_("blog-images").upload(filename, f)
+
+            image_url = f"{SUPABASE_URL}/storage/v1/object/public/blog-images/{filename}"
 
         # Insert blog into Supabase
-        data = {
+        supabase.table("blogs").insert({
             "title": title,
             "content": content,
             "image_url": image_url,
             "date_posted": datetime.datetime.utcnow().isoformat()
-        }
-        supabase.table("blogs").insert(data).execute()
+        }).execute()
 
         return redirect(url_for("blog"))
 
@@ -416,29 +414,37 @@ def blog():
 # Edit Blog Route
 @app.route("/blog/edit/<int:id>", methods=["GET", "POST"])
 def edit_blog(id):
-    blog = supabase.table("blogs").select("*").eq("id", id).execute().data[0]
+    # Fetch blog
+    result = supabase.table("blogs").select("*").eq("id", id).execute()
+    if not result.data:
+        return "Blog not found", 404
+
+    blog = result.data[0]
 
     if request.method == "POST":
-        title = request.form["title"]
-        content = request.form["content"]
-        image_url = blog["image_url"]
+        title = request.form.get("title", "").strip()
+        content = request.form.get("content", "").strip()
+        image_url = blog.get("image_url")
 
-        if "image" in request.files:
-            file = request.files["image"]
-            if file and allowed_file(file.filename):
-                filename = secure_filename(file.filename)
-                file_path = os.path.join(app.config['UPLOAD_FOLDER'], filename)
-                file.save(file_path)
+        file = request.files.get("image")
+        if file and allowed_file(file.filename):
+            filename = secure_filename(f"{uuid.uuid4()}_{file.filename}")
+            file_path = os.path.join(app.config['UPLOAD_FOLDER'], filename)
+            file.save(file_path)
 
-                # Upload new image to Supabase Storage
-                with open(file_path, "rb") as f:
-                    response = supabase.storage.from_("blog-images").upload(filename, f)
+            # Upload new image to Supabase
+            with open(file_path, "rb") as f:
+                supabase.storage.from_("blog-images").upload(filename, f)
 
-                # Generate new public URL
-                image_url = f"{SUPABASE_URL}/storage/v1/object/public/blog-images/{filename}"
+            image_url = f"{SUPABASE_URL}/storage/v1/object/public/blog-images/{filename}"
 
-        # Update blog in Supabase
-        supabase.table("blogs").update({"title": title, "content": content, "image_url": image_url}).eq("id", id).execute()
+        # Update Supabase
+        supabase.table("blogs").update({
+            "title": title,
+            "content": content,
+            "image_url": image_url
+        }).eq("id", id).execute()
+
         return redirect(url_for("blog"))
 
     return render_template("edit_blog.html", blog=blog)
@@ -446,20 +452,20 @@ def edit_blog(id):
 # Route to delete a blog post
 @app.route("/delete_blog/<int:id>", methods=["POST"])
 def delete_blog(id):
-    result = supabase.table("blogs").select("image_url").eq("id", id).execute()
+    result = supabase.table("blogs").select("*").eq("id", id).execute()
     if not result.data:
         return "Blog not found", 404
 
     blog = result.data[0]
 
-    # Delete image from Supabase Storage
+    # Delete image from Supabase storage if exists
     if blog.get("image_url"):
         filename = blog["image_url"].split("/")[-1]
-        resp = supabase.storage.from_("blog-images").remove(filename)
+        resp = supabase.storage.from_("blog-images").remove([filename])
         if resp.get("error"):
             print("Supabase Storage Delete Error:", resp["error"])
 
-    # Delete blog post
+    # Delete blog
     supabase.table("blogs").delete().eq("id", id).execute()
     return redirect(url_for("blog"))
 
