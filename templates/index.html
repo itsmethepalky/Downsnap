@@ -231,10 +231,7 @@ function toggleMode() {
     </a>
 
     <!-- WhatsApp -->
-    <a href="https://api.whatsapp.com/send?text={{ title|urlencode }}%20{{ url|urlencode }}" 
-   target="_blank" rel="noopener noreferrer">
-   <i class="fab fa-whatsapp"></i>
-</a>
+    <a href="https://api.whatsapp.com/send?text={{ title|urlencode }}%20{{ url|urlencode }}" class="btn whatsapp" target="_blank" rel="noopener noreferrer" aria-label="Share on LinkedIn"><i class="fab fa-whatsapp"></i></a>
 
     <!-- Telegram -->
     <a href="https://t.me/share/url?url={{ url }}&text={{ title }}" 
