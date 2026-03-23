@@ -577,9 +577,9 @@ def sitemap():
         {"name": "Disclaimer", "endpoint": "disclaimer"},
     ]
 
-    # Load blogs from Supabase (only fetch slugs for efficiency)
+    # Load blogs from Supabase (fetch both slugs and titles)
     try:
-        response = supabase.table("blogs").select("slug").order("date_posted", desc=True).execute()
+        response = supabase.table("blogs").select("slug, title").order("date_posted", desc=True).execute()
         blogs_list = response.data if response.data else []
     except Exception as e:
         print("Supabase Error:", e)
