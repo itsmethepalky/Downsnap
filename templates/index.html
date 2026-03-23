@@ -291,7 +291,7 @@ function toggleMode() {
                         } else {
                             mediaElement = document.createElement('img');
                             mediaElement.src = '/download-file?url=' + encodeURIComponent(item.url);
-                            mediaElement.alt = "Instagram Image";
+                            mediaElement.alt = data.caption ? data.caption : `Instagram ${item.type} from ${data.username || 'unknown user'}`;
                         }
 
                         // Wrap media element and button
