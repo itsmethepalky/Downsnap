@@ -357,21 +357,34 @@ function toggleMode() {
     </script>
         <!-- Add this in base template, e.g., base.html -->
 <div id="cookie-consent" style="position:fixed; bottom:0; width:100%; background:#222; color:#fff; padding:15px; text-align:center; z-index:1000;">
-  We use cookies to improve your experience and show personalized ads. 
+  We use cookies to improve your experience and show personalized ads.
   <button onclick="acceptCookies()" style="margin-left:10px; padding:5px 10px;">Accept</button>
+  <button onclick="rejectCookies()" style="margin-left:10px; padding:5px 10px;">Reject</button>
 </div>
 
 <script>
 function acceptCookies() {
     document.cookie = "cookies_accepted=true; path=/; max-age=" + 60*60*24*365;
     document.getElementById('cookie-consent').style.display = 'none';
+    // Optionally, load AdSense scripts now if you want GDPR-compliant ads
+    loadAdsense();
 }
 
+function rejectCookies() {
+    document.cookie = "cookies_accepted=false; path=/; max-age=" + 60*60*24*365;
+    document.getElementById('cookie-consent').style.display = 'none';
+}
+
+// Hide banner if cookie already set
 window.addEventListener("load", function() {
-    if (document.cookie.split(';').some((c) => c.trim().startsWith('cookies_accepted='))) {
-        document.getElementById('cookie-consent').style.display = 'none';
-    }
+    const cookie = document.cookie.split(';').some((c) => c.trim().startsWith('cookies_accepted='));
+    if (cookie) document.getElementById('cookie-consent').style.display = 'none';
 });
+
+// Optional: GDPR-compliant AdSense loader
+function loadAdsense() {
+    (adsbygoogle = window.adsbygoogle || []).push({});
+}
 </script>
 </body>
 </html>
