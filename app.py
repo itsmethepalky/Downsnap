@@ -382,6 +382,9 @@ def add_blog():
         title = request.form.get("title", "").strip()
         content = request.form.get("content", "").strip()
         image_url = None
+        
+        # Generate the slug from title
+        slug = slugify(title)
 
         # Handle uploaded image
         file = request.files.get("image")
@@ -396,11 +399,12 @@ def add_blog():
 
             image_url = f"{SUPABASE_URL}/storage/v1/object/public/blog-images/{filename}"
 
-        # Insert blog into Supabase
+        # Insert blog into Supabase (with slug)
         supabase.table("blogs").insert({
             "title": title,
             "content": content,
             "image_url": image_url,
+            "slug": slug,  # Insert the slug
             "date_posted": datetime.datetime.utcnow().isoformat()
         }).execute()
 
@@ -420,10 +424,10 @@ def blog():
 
 # Route to edit a blog post
 # Edit Blog Route
-@app.route("/blog/edit/<int:id>", methods=["GET", "POST"])
-def edit_blog(id):
-    # Fetch blog
-    result = supabase.table("blogs").select("*").eq("id", id).execute()
+@app.route("/blog/edit/<slug>", methods=["GET", "POST"])
+def edit_blog(slug):
+    # Fetch blog using slug
+    result = supabase.table("blogs").select("*").eq("slug", slug).execute()
     if not result.data:
         return "Blog not found", 404
 
@@ -433,6 +437,9 @@ def edit_blog(id):
         title = request.form.get("title", "").strip()
         content = request.form.get("content", "").strip()
         image_url = blog.get("image_url")
+
+        # Generate the new slug (in case title changes)
+        new_slug = slugify(title)
 
         file = request.files.get("image")
         if file and allowed_file(file.filename):
@@ -450,17 +457,18 @@ def edit_blog(id):
         supabase.table("blogs").update({
             "title": title,
             "content": content,
+            "slug": new_slug,  # Update the slug
             "image_url": image_url
-        }).eq("id", id).execute()
+        }).eq("slug", slug).execute()
 
         return redirect(url_for("blog"))
 
     return render_template("edit_blog.html", blog=blog)
 
 # Route to delete a blog post
-@app.route("/delete_blog/<int:id>", methods=["POST"])
-def delete_blog(id):
-    result = supabase.table("blogs").select("*").eq("id", id).execute()
+@app.route("/delete_blog/<slug>", methods=["POST"])
+def delete_blog(slug):
+    result = supabase.table("blogs").select("*").eq("slug", slug).execute()
     if not result.data:
         return "Blog not found", 404
 
@@ -474,14 +482,17 @@ def delete_blog(id):
             print("Supabase Storage Delete Error:", resp["error"])
 
     # Delete blog
-    supabase.table("blogs").delete().eq("id", id).execute()
+    supabase.table("blogs").delete().eq("slug", slug).execute()
     return redirect(url_for("blog"))
 
-@app.route('/blog/<int:blog_id>', endpoint='view_blog')
-def view_blog(blog_id):
-    blog = supabase.table("blogs").select("*").eq("id", blog_id).execute().data[0]
-    if not blog:
+@app.route('/blog/<slug>', endpoint='view_blog')
+def view_blog(slug):
+    # Fetch blog using slug
+    result = supabase.table("blogs").select("*").eq("slug", slug).execute()
+    if not result.data:
         abort(404)
+    
+    blog = result.data[0]
     return render_template('view_blog.html', blog=blog)
 # Additional static routes for SEO, contact, terms, etc.
 @app.route('/terms')
