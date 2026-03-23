@@ -180,17 +180,17 @@ footer {
         <img src="{{ blog.image_url }}" alt="Blog Image">
         {% endif %}
 
-        <a href="{{ url_for('view_blog', blog_id=blog.id) }}" class="read-more">Read More</a>
+        <a href="{{ url_for('view_blog', slug=blog.slug) }}" class="read-more">Read More</a>
 
         <!-- Social Share -->
         <p class="share-text">Share this content:</p>
         <div class="social-buttons">
-            <a href="https://www.facebook.com/sharer/sharer.php?u={{ request.host_url }}blog/{{ blog.id }}" target="_blank" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
-            <a href="https://twitter.com/intent/tweet?url={{ request.host_url }}blog/{{ blog.id }}&text={{ blog.title }}" target="_blank" aria-label="Twitter"><i class="fab fa-twitter"></i></a>
-            <a href="https://www.linkedin.com/sharing/share-offsite/?url={{ request.host_url }}blog/{{ blog.id }}" target="_blank" aria-label="LinkedIn"><i class="fab fa-linkedin-in"></i></a>
-            <a href="https://api.whatsapp.com/send?text={{ blog.title }} {{ request.host_url }}blog/{{ blog.id }}" target="_blank" aria-label="WhatsApp"><i class="fab fa-whatsapp"></i></a>
-            <a href="https://t.me/share/url?url={{ request.host_url }}blog/{{ blog.id }}&text={{ blog.title }}" target="_blank" aria-label="Telegram"><i class="fab fa-telegram-plane"></i></a>
-        </div>
+    <a href="https://www.facebook.com/sharer/sharer.php?u={{ request.host_url }}blog/{{ blog.slug }}" target="_blank" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
+    <a href="https://twitter.com/intent/tweet?url={{ request.host_url }}blog/{{ blog.slug }}&text={{ blog.title }}" target="_blank" aria-label="Twitter"><i class="fab fa-twitter"></i></a>
+    <a href="https://www.linkedin.com/sharing/share-offsite/?url={{ request.host_url }}blog/{{ blog.slug }}" target="_blank" aria-label="LinkedIn"><i class="fab fa-linkedin-in"></i></a>
+    <a href="https://api.whatsapp.com/send?text={{ blog.title }} {{ request.host_url }}blog/{{ blog.slug }}" target="_blank" aria-label="WhatsApp"><i class="fab fa-whatsapp"></i></a>
+    <a href="https://t.me/share/url?url={{ request.host_url }}blog/{{ blog.slug }}&text={{ blog.title }}" target="_blank" aria-label="Telegram"><i class="fab fa-telegram-plane"></i></a>
+</div>
     </div>
     {% endfor %}
 
