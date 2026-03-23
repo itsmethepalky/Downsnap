@@ -258,10 +258,9 @@ def allowed_file(filename):
 L = instaloader.Instaloader()
 
 @app.before_request
-def redirect_to_non_www():
-    if request.host == 'www.downsnap.online':  # WWW
-        return redirect("https://downsnap.online" + request.full_path, code=301)
-
+def redirect_to_www():
+    if request.host != 'www.downsnap.online':
+        return redirect("https://www.downsnap.online" + request.full_path, code=301)
 def extract_instagram_data(url):
     try:
         # Use instaloader to get the post from the URL
