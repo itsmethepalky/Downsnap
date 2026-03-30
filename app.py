@@ -557,7 +557,7 @@ def sitemap_xml():
     except Exception as e:
         print("Supabase Error:", e)
 
-    # Generate XML
+    # Generate XML with correct declaration
     xml_sitemap = '<?xml version="1.0" encoding="UTF-8"?>\n'
     xml_sitemap += '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n'
     for url in urls:
@@ -571,6 +571,8 @@ def sitemap_xml():
     response.headers.pop('X-Frame-Options', None)         # Remove X-Frame-Options header
     response.headers.pop('Permissions-Policy', None)      # Remove Permissions-Policy header
     response.headers.pop('Referrer-Policy', None)         # Remove Referrer-Policy header
+
+    return response
 
     return response
 
