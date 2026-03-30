@@ -267,13 +267,14 @@ L = instaloader.Instaloader()
 
 @app.before_request
 def enforce_https_and_www():
-    url = request.url
+    # Skip redirects for robots.txt, sitemap.xml, favicon.ico
+    exempt_paths = ['/robots.txt', '/sitemap.xml', '/favicon.ico', '/ads.txt']
+    if request.path in exempt_paths:
+        return
 
-    # If not HTTPS, redirect to HTTPS
+    url = request.url
     if not url.startswith("https://"):
         return redirect("https://" + request.host + request.full_path, code=301)
-
-    # If not www, redirect to www
     if not request.host.startswith("www."):
         return redirect("https://www." + request.host + request.full_path, code=301)
         
