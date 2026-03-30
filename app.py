@@ -529,7 +529,7 @@ def thankyou():
 
 @app.route('/robots.txt')
 def robots():
-    return send_from_directory(app.template_folder, 'robots.txt')
+    return send_from_directory('static', 'robots.txt', mimetype='text/plain')
 
 @app.route('/ads.txt')
 def serve_ads_txt():
