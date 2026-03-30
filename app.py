@@ -529,12 +529,12 @@ def thankyou():
     return render_template('thankyou.html')
 
 @app.route('/robots.txt')
-def robots():
-    return send_from_directory('static', 'robots.txt', mimetype='text/plain', conditional=True)
+def robots_txt():
+    return send_from_directory('static', 'robots.txt', mimetype='text/plain')
 
 @app.route('/ads.txt')
-def serve_ads_txt():
-    return send_from_directory(app.template_folder, 'ads.txt')
+def ads_txt():
+    return send_from_directory('static', 'ads.txt', mimetype='text/plain')
 
 @app.route('/sitemap.xml', methods=['GET'])
 def sitemap_xml():
