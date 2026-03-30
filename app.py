@@ -238,7 +238,7 @@ csp = {
         "https://fonts.gstatic.com"
     ]
 }
-Talisman(app, content_security_policy=csp)
+talisman = Talisman(app, content_security_policy=csp, force_https=False)
 
 # Apply Flask-Talisman with HSTS settings
 
@@ -530,7 +530,7 @@ def thankyou():
 
 @app.route('/robots.txt')
 def robots():
-    return send_from_directory('static', 'robots.txt', mimetype='text/plain')
+    return send_from_directory('static', 'robots.txt', mimetype='text/plain', conditional=True)
 
 @app.route('/ads.txt')
 def serve_ads_txt():
