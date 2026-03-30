@@ -563,8 +563,16 @@ def sitemap_xml():
     for url in urls:
         xml_sitemap += f'  <url><loc>{url}</loc></url>\n'
     xml_sitemap += '</urlset>'
-    
-    return Response(xml_sitemap, mimetype='application/xml')
+
+    # Create a response object
+    response = make_response(xml_sitemap)
+    response.headers['Content-Type'] = 'application/xml'  # No charset
+    response.headers.pop('Content-Security-Policy', None)  # Remove CSP header
+    response.headers.pop('X-Frame-Options', None)         # Remove X-Frame-Options header
+    response.headers.pop('Permissions-Policy', None)      # Remove Permissions-Policy header
+    response.headers.pop('Referrer-Policy', None)         # Remove Referrer-Policy header
+
+    return response
 
 @app.route('/sitemap')
 def sitemap():
