@@ -1,10 +1,5 @@
-# Allow all search engines to crawl the website
 User-agent: *
-Disallow:
-
-# Disallow access to any potential admin areas or private directories
 Disallow: /admin/
 Disallow: /private/
 
-# Specify the location of the sitemap
 Sitemap: https://www.downsnap.online/sitemap.xml
