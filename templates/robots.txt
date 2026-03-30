@@ -7,4 +7,4 @@ Disallow: /admin/
 Disallow: /private/
 
 # Specify the location of the sitemap
-Sitemap: https://downsnap.onrender.com/sitemap.html
+Sitemap: https://www.downsnap.online/sitemap.xml
