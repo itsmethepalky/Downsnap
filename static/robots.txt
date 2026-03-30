@@ -1,4 +1,8 @@
 User-agent: *
-allow: /
+Disallow: /admin/
+Disallow: /add_blog
+Disallow: /delete_blog
+Disallow: /edit_blog
+Allow: /
 
 Sitemap: https://www.downsnap.online/sitemap.xml
