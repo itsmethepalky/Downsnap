@@ -234,6 +234,8 @@ csp = {
 
     "font-src": [
         "'self'",
+        "https:",
+        "data:",
         "https://cdnjs.cloudflare.com",
         "https://fonts.gstatic.com"
     ]
@@ -267,7 +269,9 @@ L = instaloader.Instaloader()
 
 @app.before_request
 def enforce_https_and_www():
-    # Skip redirects for robots.txt, sitemap.xml, favicon.ico
+    if app.debug:   # 👈 IMPORTANT
+        return
+
     exempt_paths = ['/robots.txt', '/sitemap.xml', '/favicon.ico', '/ads.txt']
     if request.path in exempt_paths:
         return
