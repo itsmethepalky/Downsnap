@@ -48,6 +48,11 @@ nav h1 {
     font-weight: 700;
 }
 
+nav h1 a {
+    font-size: 22px;
+    color: #38bdf8;
+    font-weight: 700;
+}
 /* NAV LINKS */
 .nav-links {
     display: flex;
@@ -278,10 +283,12 @@ body:not(.night-mode) .media-wrapper {
 #blog-section {
     margin-top: 40px;
     line-height: 1.7;
+    text-align: center;
 }
 
 #blog-section h2 {
     margin-bottom: 10px;
+    text-align: center;
 }
 
 /* =========================
