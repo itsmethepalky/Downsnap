@@ -13,6 +13,8 @@ import uuid
 
 app = Flask(__name__, static_url_path='/static')
 
+BASE_URL = "https://www.downsnap.online"
+
 SITEMAP_HTML = """
 <!DOCTYPE html>
 <html lang="en">
@@ -269,18 +271,21 @@ L = instaloader.Instaloader()
 
 @app.before_request
 def enforce_https_and_www():
-    if app.debug:   # 👈 IMPORTANT
+    if app.debug:
         return
 
     exempt_paths = ['/robots.txt', '/sitemap.xml', '/favicon.ico', '/ads.txt']
     if request.path in exempt_paths:
         return
 
+    host = request.host.replace("www.", "")
     url = request.url
-    if not url.startswith("https://"):
-        return redirect("https://" + request.host + request.full_path, code=301)
-    if not request.host.startswith("www."):
-        return redirect("https://www." + request.host + request.full_path, code=301)
+
+    if not request.is_secure or not request.host.startswith("www."):
+        return redirect(
+            "https://www." + host + request.full_path,
+            code=301
+        )
         
 def extract_instagram_data(url):
     try:
@@ -549,15 +554,14 @@ def sitemap_xml():
         "home", "about", "contact", "terms", "privacy", "disclaimer"
     ]
     for endpoint in static_pages:
-        urls.append(request.host_url.rstrip('/') + url_for(endpoint))
-
+        urls.append(f"{BASE_URL}{url_for(endpoint)}")
     # Blogs with slugs
     try:
         response = supabase.table("blogs").select("slug").execute()
         blogs_list = response.data if response.data else []
         for blog in blogs_list:
             # Use the slug in the URL
-            urls.append(f"{request.host_url.rstrip('/')}/blog/{blog['slug']}")
+            urls.append(f"{BASE_URL}/blog/{blog['slug']}")
     except Exception as e:
         print("Supabase Error:", e)
 
@@ -578,7 +582,6 @@ def sitemap_xml():
 
     return response
 
-    return response
 
 @app.route('/sitemap')
 def sitemap():
@@ -601,7 +604,12 @@ def sitemap():
         blogs_list = []
 
     # Pass pages and blogs list to the template
-    return render_template_string(SITEMAP_HTML, pages=pages_list, blogs=blogs_list, request=request)
+    return render_template_string(
+    SITEMAP_HTML,
+    pages=pages_list,
+    blogs=blogs_list,
+    BASE_URL=BASE_URL
+)
 
 
     
