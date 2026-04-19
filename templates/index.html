@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, minimum-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="robots" content="index, follow">
     <meta name="googlebot" content="index, follow">
     <meta name="bingbot" content="index, follow">
@@ -50,11 +50,431 @@
     "contactType": "Customer Support"
   }
 }
+
 </script>
-    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
     <meta name="google-site-verification" content="7yb50L2gU2gd7gbXpwoFL-uYKriej9Qm9ZW_gjujx7U" />
     <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-7422771049190232"
      crossorigin="anonymous"></script>
+     <style>/* =========================
+   RESET + BASE
+========================= */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: "Poppins", sans-serif;
+    background: #0f172a;
+    color: #e2e8f0;
+    transition: all 0.3s ease;
+}
+
+/* LIGHT MODE */
+body:not(.night-mode) {
+    background: #f8fafc;
+    color: #1e293b;
+}
+
+/* =========================
+   NAVBAR
+========================= */
+header {
+    position: sticky;
+    top: 0;
+    backdrop-filter: blur(12px);
+    background: rgba(15, 23, 42, 0.75);
+    z-index: 1000;
+}
+
+body:not(.night-mode) header {
+    background: rgba(255, 255, 255, 0.8);
+}
+
+nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px 8%;
+}
+
+nav h1 {
+    font-size: 22px;
+    color: #38bdf8;
+    font-weight: 700;
+}
+
+nav h1 a {
+    font-size: 22px;
+    color: #38bdf8;
+    font-weight: 700;
+}
+/* NAV LINKS */
+.nav-links {
+    display: flex;
+    align-items: center;
+    gap: 18px;
+}
+
+.nav-links a {
+    text-decoration: none;
+    color: #cbd5f5;
+    font-size: 14px;
+    transition: 0.3s;
+}
+
+.nav-links a:hover {
+    color: #38bdf8;
+}
+
+body:not(.night-mode) .nav-links a {
+    color: #334155;
+}
+
+/* =========================
+   TOGGLE SWITCH
+========================= */
+.switch {
+    position: relative;
+    width: 42px;
+    height: 22px;
+}
+
+.switch input {
+    display: none;
+}
+
+.slider {
+    position: absolute;
+    cursor: pointer;
+    background: #334155;
+    border-radius: 50px;
+    inset: 0;
+    transition: 0.4s;
+}
+
+.slider:before {
+    content: "";
+    position: absolute;
+    width: 16px;
+    height: 16px;
+    left: 4px;
+    bottom: 3px;
+    background: white;
+    border-radius: 50%;
+    transition: 0.4s;
+}
+
+input:checked + .slider {
+    background: #38bdf8;
+}
+
+input:checked + .slider:before {
+    transform: translateX(18px);
+}
+
+/* =========================
+   HERO TEXT
+========================= */
+h2 {
+    text-align: center;
+    padding: 25px 20px;
+    font-size: 18px;
+    color: #94a3b8;
+}
+
+body:not(.night-mode) h2 {
+    color: #475569;
+}
+
+/* =========================
+   MAIN CONTAINER
+========================= */
+.container {
+    max-width: 800px;
+    margin: auto;
+    padding: 20px;
+}
+
+/* =========================
+   INPUT SECTION
+========================= */
+#input-section {
+    background: rgba(255,255,255,0.05);
+    padding: 25px;
+    border-radius: 14px;
+    box-shadow: 0 10px 40px rgba(0,0,0,0.25);
+    transition: 0.3s;
+}
+
+#input-section:hover {
+    transform: translateY(-3px);
+}
+
+body:not(.night-mode) #input-section {
+    background: white;
+}
+
+/* INPUT GROUP */
+.input-group {
+    display: flex;
+    border-radius: 10px;
+    overflow: hidden;
+}
+
+.input-group input {
+    flex: 1;
+    padding: 12px;
+    border: none;
+    outline: none;
+    font-size: 14px;
+    background: #1e293b;
+    color: white;
+}
+
+body:not(.night-mode) .input-group input {
+    background: #f1f5f9;
+    color: black;
+}
+
+.input-group button {
+    background: #38bdf8;
+    border: none;
+    padding: 0 15px;
+    color: white;
+    cursor: pointer;
+}
+
+/* DOWNLOAD BUTTON */
+#url-form button[type="submit"] {
+    width: 100%;
+    margin-top: 12px;
+    padding: 12px;
+    border-radius: 10px;
+    border: none;
+    background: linear-gradient(90deg, #38bdf8, #6366f1);
+    color: white;
+    font-weight: 600;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+#url-form button:hover {
+    transform: scale(1.03);
+}
+
+/* =========================
+   PREVIEW
+========================= */
+#preview-container {
+    margin-top: 25px;
+}
+
+.media-wrapper {
+    margin: 15px 0;
+    padding: 12px;
+    border-radius: 12px;
+    background: rgba(255,255,255,0.05);
+    animation: fadeIn 0.5s ease;
+}
+
+body:not(.night-mode) .media-wrapper {
+    background: white;
+}
+
+.media-wrapper img,
+.media-wrapper video {
+      max-width: 100%;
+    height: auto;
+    border-radius: 5px;
+    margin-bottom: 10px;
+}
+
+/* DOWNLOAD BTN */
+.media-wrapper button {
+    margin-top: 10px;
+    padding: 8px 14px;
+    border-radius: 6px;
+    border: none;
+    background: #22c55e;
+    color: white;
+    cursor: pointer;
+    transition: 0.2s;
+}
+
+.media-wrapper button:hover {
+    transform: scale(1.05);
+}
+
+/* BACK BUTTON */
+#back-btn {
+    margin-top: 15px;
+    padding: 10px 20px;
+    border-radius: 8px;
+    background: #64748b;
+    border: none;
+    color: white;
+}
+
+/* =========================
+   LOADER (SPINNER)
+========================= */
+.loader {
+    width: 50px;
+    height: 50px;
+    border: 4px solid rgba(255,255,255,0.1);
+    border-top: 4px solid #38bdf8;
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+    margin: 30px auto;
+}
+
+@keyframes spin {
+    to { transform: rotate(360deg); }
+}
+
+/* =========================
+   BLOG SECTION
+========================= */
+#blog-section {
+    margin-top: 40px;
+    line-height: 1.7;
+    text-align: center;
+}
+
+#blog-section h2 {
+    margin-bottom: 10px;
+    text-align: center;
+}
+
+/* =========================
+   ADS (CLS SAFE)
+========================= */
+.ad-container {
+    min-height: 120px;
+    margin: 30px 0;
+    padding: 15px;
+    text-align: center;
+    border-radius: 10px;
+    background: rgba(255,255,255,0.05);
+}
+
+body:not(.night-mode) .ad-container {
+    background: #f1f5f9;
+}
+
+.ad-banner {
+    text-align: center;
+    margin: 10px 0;
+    font-size: 14px;
+}
+
+/* =========================
+   FOOTER
+========================= */
+footer {
+    margin-top: 40px;
+    padding: 30px 8%;
+    background: #020617;
+}
+
+body:not(.night-mode) footer {
+    background: #e2e8f0;
+}
+
+.footer-container {
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+}
+
+.footer-section h4 {
+    margin-bottom: 10px;
+}
+
+.footer-section ul {
+    list-style: none;
+}
+
+.footer-section li {
+    margin-bottom: 6px;
+}
+
+.footer-section a {
+    text-decoration: none;
+    color: #94a3b8;
+}
+
+.footer-section a:hover {
+    color: #38bdf8;
+}
+
+/* FOOTER BOTTOM */
+.footer-bottom {
+    text-align: center;
+    margin-top: 20px;
+}
+
+/* =========================
+   SOCIAL SHARE
+========================= */
+.share-text {
+    text-align: center;
+    margin-top: 20px;
+}
+
+.social-buttons {
+    display: flex;
+    justify-content: center;
+    gap: 12px;
+    margin-top: 10px;
+}
+
+.social-buttons .btn {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    transition: 0.3s;
+}
+
+.social-buttons .btn:hover {
+    transform: translateY(-4px) scale(1.1);
+}
+
+.facebook { background:#1877f2; }
+.twitter { background:#1da1f2; }
+.linkedin { background:#0077b5; }
+.whatsapp { background:#25d366; }
+.telegram { background:#0088cc; }
+
+/* =========================
+   ANIMATION
+========================= */
+@keyframes fadeIn {
+    from {opacity:0; transform: translateY(10px);}
+    to {opacity:1; transform: translateY(0);}
+}
+
+/* =========================
+   RESPONSIVE
+========================= */
+@media(max-width:768px) {
+    nav {
+        flex-direction: column;
+        gap: 10px;
+    }
+
+    .footer-container {
+        flex-direction: column;
+        gap: 20px;
+    }
+}
+</style>
 </head>
 
 
