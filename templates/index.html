@@ -24,7 +24,17 @@
 <meta name="twitter:image" content="https://lh3.googleusercontent.com/d/1Jq3-LRieYYUveYpYVTmFhuWTMaCgCO4t" />
 <meta name="twitter:url" content="https://www.downsnap.online/" />
     <title>Downsnap</title>
-   <link rel="preload" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" as="style" onload="this.rel='stylesheet'">
+   <link rel="preconnect" href="https://cdnjs.cloudflare.com">
+<link rel="preconnect" href="https://cdnjs.cloudflare.com" crossorigin>
+
+<link rel="preload" as="style"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
+      onload="this.onload=null;this.rel='stylesheet'">
+
+<noscript>
+<link rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+</noscript>
     <link rel="icon" href="{{ url_for('static', filename='favicon.ico') }}" type="image/x-icon">
     <link rel="icon" sizes="192x192" href="{{ url_for('static', filename='android_icon.ico') }}" type="image/x-icon">
     <link rel="apple-touch-icon" sizes="120x120" href="{{ url_for('static', filename='apple-touch-icon.ico') }}" type="image/x-icon">
