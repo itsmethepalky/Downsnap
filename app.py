@@ -194,6 +194,8 @@ csp = {
         "'self'",
         "'unsafe-inline'",
         "'unsafe-eval'",
+        "https://www.googletagmanager.com",
+        "https://www.google-analytics.com",
         "https://pagead2.googlesyndication.com",
         "https://googleads.g.doubleclick.net",
         "https://tpc.googlesyndication.com",
@@ -218,6 +220,8 @@ csp = {
 
     "connect-src": [
         "'self'",
+        "https://www.googletagmanager.com",
+        "https://www.google-analytics.com",
         "https://*.supabase.co",
         "https://pagead2.googlesyndication.com",
         "https://googleads.g.doubleclick.net",
