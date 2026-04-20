@@ -629,6 +629,10 @@ def page_not_found(e):
 def amp_page():
     return render_template('amp_index.html')
 
+@app.route('/app')
+def app_page():
+    return render_template('app.html')
+
 @app.route('/logo.png')
 def logo():
     return send_from_directory(app.root_path, 'logo.png')
