@@ -525,6 +525,10 @@ def terms():
 def privacy():
     return render_template('privacy.html')
 
+@app.route('/app-ads.txt')
+def app_ads():
+    return send_from_directory('static', 'app-ads.txt', mimetype='text/plain')
+
 @app.route('/disclaimer')
 def disclaimer():
     return render_template('disclaimer.html')
